@@ -1,0 +1,118 @@
+<div class="p-5 mt-5">
+  <div class="card">
+    <div class="d-flex card-header align-items-center justify-content-between">
+      <div class="d-flex align-items-center">
+        <h1 class="mx-1">{{ forum.getTitle() }}</h1>
+      </div>
+      <div class="d-flex align-items-center">
+        <div
+          class="d-flex flex-column justify-content-center align-items-center"
+        >
+          <img
+            class="rounded-circle"
+            width="60"
+            height="60"
+            src="../../../assets/user.jpeg"
+            alt="user"
+          />
+          <p>{{ forum.getAuthor() }}</p>
+        </div>
+        <div class="d-flex flex-column mx-2">
+          <button class="btn btn-outline-success my-1" (click)="forum.like()">
+            <i class="px-1 bi bi-hand-thumbs-up">{{ forum.getLikes() }}</i>
+          </button>
+          <button class="btn btn-outline-danger my-1" (click)="forum.dislike()">
+            <i class="px-1 bi bi-hand-thumbs-down">{{ forum.getDislikes() }}</i>
+          </button>
+        </div>
+
+        <button
+          class="btn"
+          mat-icon-button
+          [matMenuTriggerFor]="menu"
+          aria-label="Example icon-button with a menu"
+        >
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu" id="menu">
+          <button (click)="deleteForumFromServer()" mat-menu-item>
+            <mat-icon class="text-danger">delete</mat-icon>
+            <span>Delete</span>
+          </button>
+          <button (click)="editForumInServer()" mat-menu-item>
+            <mat-icon>edit</mat-icon>
+            <span>Edit</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+    <div class="card-body">
+      <p class="p-2">{{ forum.getDescription() }}</p>
+      <p class="text-secondary lh-1">
+        <span class="fw-bold">Created on:</span>
+        {{ forum.getDate() }}
+      </p>
+      <p class="text-secondary lh-1">
+        <span class="fw-bold">Category: </span>
+        {{ forum.getCategory() }}
+      </p>
+      <div *ngIf="forum.tagsToArray().length != 0" class="d-flex">
+        <p class="text-secondary lh-1">Tags:</p>
+        <div *ngFor="let tag of forum.tagsToArray()">
+          <app-topic-pill tag="{{ tag }}"></app-topic-pill>
+        </div>
+      </div>
+      <div *ngIf="forum.tagsToArray().length == 0">
+        <p>Tags: No tags yet</p>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="d-flex align-items-center flex-row justify-content-between">
+        <p class="h5 fw-bold">Comments:</p>
+        <p>{{ forum.getFeedbacks().length }}</p>
+      </div>
+      <div class="card-body" *ngIf="forum.getFeedbacks().length == 0">
+        <p>No comments yet</p>
+      </div>
+      <div
+        class="align-items-center w-100 p-3 border rounded bg-white"
+        *ngFor="let comment of getFeedbacks()"
+      >
+        <div class="d-flex align-items-center flex-row justify-content-between">
+          <div class="d-flex align-items-center justify-content-center">
+            <img
+              class="rounded-circle"
+              width="40"
+              height="40"
+              src="../../../assets/user.jpeg"
+              alt="user"
+            />
+            <p class="mx-2">{{ comment.getUserId() }}</p>
+          </div>
+          <div class="d-flex align-items-center justify-content-center">
+            <p class="text-secondary lh-1">{{ comment.getCreatedAt() }}</p>
+            <button class="btn" data-toggle="modal" data-target="#myModal">
+              <i class="bi bi-three-dots-vertical"></i>
+            </button>
+          </div>
+        </div>
+        <div class="my-1 p-2">
+          <p>{{ comment.getComment() }}</p>
+        </div>
+      </div>
+      <div
+        class="d-flex align-items-center flex-row justify-content-between my-1"
+      >
+        <input
+          class="form-control"
+          type="text"
+          placeholder="Write a comment"
+          [(ngModel)]="comment"
+        />
+        <button class="btn btn-primary mx-2" (click)="addComment(comment)">
+          <i class="bi bi-send"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

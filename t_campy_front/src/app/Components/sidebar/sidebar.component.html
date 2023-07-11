@@ -1,0 +1,30 @@
+<div class="p-4 pt-4 shadow rounded side h-100">
+  <p class="fs-2 custom-blue">Filters</p>
+  <div>
+    <p class="fw-bold">Categories</p>
+    <a
+      *ngFor="let category of getCategories()"
+      class="btn btn-outline-secondary text-start m-1"
+      >{{ category }}</a
+    >
+  </div>
+  <div>
+    <p class="fw-bold">Tags #</p>
+    <div class="d-flex flex-wrap">
+      <button class="btn btn-light text-start m-1"># General</button>
+      <button class="btn btn-light text-start m-1"># Ideas</button>
+      <button class="btn btn-light text-start m-1"># Camping</button>
+      <button class="btn btn-light text-start m-1"># Offer</button>
+    </div>
+  </div>
+  <div *ngIf="isAdmin()">
+    <p class="fw-bold">Admin</p>
+    <button
+      class="btn btn-custom-blue-filled w-100 mx-1 my-4"
+      data-bs-toggle="modal"
+      data-bs-target="#topicModal"
+    >
+      + Add a Topic
+    </button>
+  </div>
+</div>

@@ -1,0 +1,47 @@
+<div
+  class="rounded border text-secondary d-flex flex-row justify-content-between align-items-center w-100 p-3"
+>
+  <div class="d-flex flex-row align-items-center">
+    <div>
+      <img
+        class="rounded-circle"
+        width="50"
+        src="../../../../assets/user.jpeg"
+        alt="user"
+      />
+    </div>
+    <div class="d-flex flex-column mx-3">
+      <div>
+        <p class="fw-bold text-dark">{{ forum.getTitle() }}</p>
+      </div>
+      <div>
+        Category:
+        <span class="fw-bold">{{ forum.getCategory() }}</span>
+      </div>
+      <div>
+        <div *ngIf="forum.tagsToArray().length != 0" class="d-flex flex-row">
+          Tags:
+          <div *ngFor="let tag of forum.tagsToArray()">
+            <app-topic-pill tag="{{ tag }}"></app-topic-pill>
+          </div>
+        </div>
+        <div *ngIf="forum.tagsToArray().length == 0">
+          <p>Tags: No tags yet</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex flex-column">
+    <div>
+      <p>{{ forum.getStatus() }}</p>
+    </div>
+    <div class="d-flex flex-row">
+      <p class="px-1 text-success">
+        <i class="bi bi-hand-thumbs-up"></i> {{ forum.getLikes() }}
+      </p>
+      <p class="px-1 text-danger">
+        <i class="bi bi-hand-thumbs-down"></i> {{ forum.getDislikes() }}
+      </p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+// Variables
+$margin-left: 50px;
+
+#QL {
+  height: 100vh;
+  margin-left: $margin-left;
+  p {
+    margin: 5px;
+  }
+  width: 70vw;
+
+  img {
+    width: 50%;
+    height: 50%;
+  }
+}

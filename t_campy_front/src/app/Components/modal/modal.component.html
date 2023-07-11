@@ -1,0 +1,116 @@
+<div
+  class="modal fade"
+  id="topicModal"
+  tabindex="-1"
+  aria-labelledby="topicModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="topicModalLabel">Add Topic</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group mb-2">
+          <input
+            name="forumTitle"
+            [(ngModel)]="title"
+            class="form-control"
+            aria-label="title"
+            type="text"
+            placeholder="Title"
+          />
+        </div>
+        <div class="input-group mb-2">
+          <textarea
+            name="forumDescription"
+            [(ngModel)]="description"
+            class="form-control"
+            aria-label="description"
+            type="text"
+            placeholder="Description"
+          ></textarea>
+        </div>
+        <select class="form-select" #categories (change)="selectCategory(categories)" aria-label="Default select example">
+          <option selected>-- Choose a category --</option>
+          <option *ngFor="let category of getCategories()" value="{{ category }}">{{ category }}</option>
+        </select>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-dismiss="modal"
+          (click)="addForumToServer()"
+        >
+          Add Topic
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="complaintModal"
+  tabindex="-1"
+  aria-labelledby="complaintModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="complaintModalLabel">Add Complaint</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group mb-2">
+          <input
+            name="ComplaintTitle"
+            [(ngModel)]="title"
+            class="form-control"
+            aria-label="title"
+            type="text"
+            placeholder="Object"
+          />
+        </div>
+        <div class="input-group mb-2">
+          <textarea
+            name="ComplaintDescription"
+            [(ngModel)]="description"
+            class="form-control"
+            aria-label="description"
+            type="text"
+            placeholder="Message"
+          ></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-dismiss="modal"
+          (click)="addComplaint()"
+        >
+          Add Complaint
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

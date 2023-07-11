@@ -1,0 +1,40 @@
+<div
+  class="bg-light h-100 w-100 p-5 d-flex align-items-center justify-content-center"
+>
+  <div class="bg-white p-5 m-5 shadow rounded w-25">
+    <div class="lh-1 mb-2">
+      <p class="fs-1 custom-blue fw-bold">TCampi</p>
+      <p class="fs-4">Login</p>
+      <p class="fs-6">Please fill in your credentials to login.</p>
+    </div>
+    <div class="input-group mb-2">
+      <input
+        [(ngModel)]="username"
+        class="form-control"
+        aria-label="Username"
+        type="text"
+        placeholder="username"
+      />
+    </div>
+    <div class="input-group mb-2">
+      <input
+        [(ngModel)]="password"
+        class="form-control"
+        aria-label="password"
+        type="password"
+        placeholder="password"
+      />
+    </div>
+    <div class="w-100">
+      <button class="btn btn-custom-blue-filled w-100" (click)="login()">login</button>
+    </div>
+    <div class="w-100 text-center mt-3">
+      <a class="text-decoration-none" href="#">Forgot password?</a>
+    </div>
+    <div class="w-100 text-center mt-3">
+      <a class="text-decoration-none" routerLink="/register">
+        Create an account
+      </a>
+    </div>
+  </div>
+</div>

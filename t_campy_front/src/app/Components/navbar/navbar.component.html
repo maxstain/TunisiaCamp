@@ -1,0 +1,53 @@
+<nav
+  *ngIf="this.routerlink.url != '/login' && this.routerlink.url != '/register'"
+  class="d-flex nav p-2 fixed-top shadow align-items-center justify-content-between"
+>
+  <div>
+    <a class="fw-bold fs-3 custom-blue text-decoration-none" routerLink="/">{{
+      title
+    }}</a>
+  </div>
+  <div class="d-flex">
+    <div class="d-flex">
+      <a class="p-1 fw-bold text-dark nav-link" routerLink="/">Home</a>
+      <a class="p-1 fw-bold text-dark nav-link" routerLink="/forums">Forums</a>
+      <a class="p-1 fw-bold text-dark nav-link" routerLink="">About</a>
+      <a
+        *ngIf="isAdmin()"
+        class="p-1 fw-bold custom-blue nav-link"
+        routerLink="/admin"
+        >Dashboard</a
+      >
+      <a
+        matBadge="{{ notifications.length }}"
+        matBadgeColor="warn"
+        matBadgeHidden="{{ hidden }}"
+        class="p-1 fw-bold text-dark nav-link"
+        routerLink=""
+      >
+        <i class="bi bi-bell-fill"></i>
+      </a>
+    </div>
+    <!-- The Authentication block: TODO -->
+    <div *ngIf="!isLogged" class="d-flex mx-2">
+      <a
+        class="p-1 btn btn-custom-blue custom-blue fw-bold mx-1"
+        routerLink="login"
+        >Login</a
+      >
+      <a
+        class="p-1 btn btn-custom-blue fw-bold custom-blue mx-1"
+        routerLink="register"
+        >Register</a
+      >
+    </div>
+    <div *ngIf="isLogged" class="d-flex mx-2">
+      <button
+        class="p-1 btn btn-custom-blue fw-bold custom-blue mx-1"
+        (click)="logout()"
+      >
+        logout
+      </button>
+    </div>
+  </div>
+</nav>

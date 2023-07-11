@@ -1,0 +1,72 @@
+<div class="d-felx flex-column rounded mt-5 card border border-1" id="QL">
+  <div
+    class="d-flex justify-content-between align-items-center card-header text-secondary"
+  >
+    <div class="d-flex flex-row px-2 align-items-center">
+      <p class="">{{ ForumsLength }} Open topics</p>
+    </div>
+    <div class="d-flex flex-row px-2 align-items-center">
+      <p class="mx-2">Sort by:</p>
+      <mat-button-toggle-group
+        name="fontStyle"
+        aria-label="Font Style"
+        class="mx-2 align-items-center"
+        [value]="Status"
+        (change)="sort($event)"
+      >
+        <mat-button-toggle value="all" class="btn btn-light p-0"
+          >all</mat-button-toggle
+        >
+        <mat-button-toggle value="popular" class="btn btn-light p-0"
+          >popular</mat-button-toggle
+        >
+        <mat-button-toggle value="recent" class="btn btn-light p-0"
+          >recent</mat-button-toggle
+        >
+        <mat-button-toggle value="unanswered" class="btn btn-light p-0"
+          >unanswered</mat-button-toggle
+        >
+      </mat-button-toggle-group>
+    </div>
+  </div>
+  <div *ngIf="forums.length != 0">
+    <mat-expansion-panel *ngFor="let forum of forums" class="card">
+      <mat-expansion-panel-header class="p-3">
+        <mat-panel-title class="fw-bold">
+          {{ forum.getTitle() }}
+        </mat-panel-title>
+        <mat-panel-description class="text-secondary">
+          {{ forum.getDescription() }}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <app-chat-card [forum]="forum"></app-chat-card>
+      <mat-action-row class="card-footer">
+        <a
+          [routerLink]="['/forums', forum.getId()]"
+          mat-raised-button
+          class="btn btn-custom-blue-filled mx-1 fw-bold w-75"
+        >
+          <i class="bi bi-chat-left-text-fill"></i>
+          Feedback
+        </a>
+        <button
+          mat-raised-button
+          data-bs-toggle="modal"
+          data-bs-target="#complaintModal"
+          class="btn btn-danger mx-1 fw-bold w-25"
+        >
+          <i class="bi bi-flag-fill"></i>
+          Complaints
+        </button>
+      </mat-action-row>
+    </mat-expansion-panel>
+  </div>
+  <div *ngIf="forums.length == 0 || forums.length == null">
+    <div class="d-flex flex-column justify-content-center align-items-center">
+      <img src="../../../assets/Empty.png" alt="empty" />
+      <h1 class="text-secondary">No topics found</h1>
+      <p class="text-secondary">Try to change the filter</p>
+    </div>
+  </div>
+</div>
