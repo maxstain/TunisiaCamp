@@ -57,7 +57,7 @@ export class Forum {
       json.tags,
       json.likes,
       json.dislikes,
-      json.Status,
+      json.status,
       json.category,
       Comment.fromJsonArray(json.feedbacks),
       Complaint.fromJsonArray(json.complaints)
@@ -82,7 +82,7 @@ export class Forum {
       tags: this.tags,
       likes: this.likes,
       dislikes: this.dislikes,
-      Status: this.Status,
+      status: this.Status,
       category: this.category,
       feedbacks: this.feedbacks.map((f) => f.toJson()),
       complaints: this.complaints.map((c) => c.toJson()),

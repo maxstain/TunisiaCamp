@@ -25,29 +25,36 @@
             <i class="px-1 bi bi-hand-thumbs-down">{{ forum.getDislikes() }}</i>
           </button>
         </div>
-
-        <button
-          class="btn"
-          mat-icon-button
-          [matMenuTriggerFor]="menu"
-          aria-label="Example icon-button with a menu"
-        >
-          <mat-icon>more_vert</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu" id="menu">
-          <button (click)="deleteForumFromServer()" mat-menu-item>
-            <mat-icon class="text-danger">delete</mat-icon>
-            <span>Delete</span>
+        <div class="ms-5">
+          <button
+            class="btn"
+            mat-icon-button
+            [matMenuTriggerFor]="menu"
+            aria-label="Example icon-button with a menu"
+          >
+            <mat-icon>more_vert</mat-icon>
           </button>
-          <button (click)="editForumInServer()" mat-menu-item>
-            <mat-icon>edit</mat-icon>
-            <span>Edit</span>
-          </button>
-        </mat-menu>
+          <mat-menu #menu="matMenu" id="menu">
+            <button (click)="deleteForumFromServer()" mat-menu-item>
+              <mat-icon class="text-danger">delete</mat-icon>
+              <span>Delete</span>
+            </button>
+            <button
+              data-bs-toggle="modal"
+              data-bs-target="#topicEditModal"
+              mat-menu-item
+            >
+              <mat-icon>edit</mat-icon>
+              <span>Edit</span>
+            </button>
+          </mat-menu>
+        </div>
       </div>
     </div>
     <div class="card-body">
-      <p class="p-2">{{ forum.getDescription() }}</p>
+      <p class="py-2 text-secondary lh-1">
+        <span class="fw-bold">Description:</span> {{ forum.getDescription() }}
+      </p>
       <p class="text-secondary lh-1">
         <span class="fw-bold">Created on:</span>
         {{ forum.getDate() }}
@@ -67,9 +74,13 @@
       </div>
     </div>
     <div class="card-footer">
-      <div class="d-flex align-items-center flex-row justify-content-between">
-        <p class="h5 fw-bold">Comments:</p>
-        <p>{{ forum.getFeedbacks().length }}</p>
+      <div class="d-flex align-items-center flex-row">
+        <p class="h5 fw-bold">
+          <span *ngIf="forum.getFeedbacks().length != 0">{{
+            forum.getFeedbacks().length
+          }}</span>
+          Comments:
+        </p>
       </div>
       <div class="card-body" *ngIf="forum.getFeedbacks().length == 0">
         <p>No comments yet</p>
@@ -111,6 +122,66 @@
         />
         <button class="btn btn-primary mx-2" (click)="addComment(comment)">
           <i class="bi bi-send"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="topicEditModal"
+  tabindex="-1"
+  aria-labelledby="topicEditModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="topicEditModalLabel">Edit Topic</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group mb-2">
+          <input
+            name="forumTitle"
+            [(ngModel)]="title"
+            class="form-control"
+            aria-label="title"
+            type="text"
+            placeholder="Title"
+          />
+        </div>
+        <div class="input-group mb-2">
+          <textarea
+            name="forumDescription"
+            [(ngModel)]="description"
+            class="form-control"
+            aria-label="description"
+            type="text"
+            placeholder="Description"
+          ></textarea>
+        </div>
+        <select class="form-select" #categories (change)="selectCategory(categories)" aria-label="Default select example">
+          <option selected>-- Choose a category --</option>
+          <option *ngFor="let category of getCategories()" value="{{ category }}">{{ category }}</option>
+        </select>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-dismiss="modal"
+          (click)="editForumInServer()"
+        >
+          Edit Topic
         </button>
       </div>
     </div>

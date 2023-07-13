@@ -10,13 +10,17 @@ import { ForumService } from 'src/app/Services/forum.service';
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent {
+  public category: string = 'All';
   constructor(
     private authService: AuthService,
     private router: Router,
     private forumService: ForumService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.forumService.getForums();
+    this.forumService.getTags();
+  }
 
   public isAdmin(): boolean {
     return this.authService.isAdmin();
@@ -24,5 +28,19 @@ export class SidebarComponent {
 
   public getCategories(): string[] {
     return this.forumService.getCategories();
+  }
+
+  public selectCategory(category: HTMLSelectElement) {
+    this.category = category.value;
+  }
+
+  public filterForumsByCategory(forums: Forum[]) {
+    if (this.category !== 'All') {
+      forums.filter((forum) => forum.getCategory() === this.category);
+    }
+  }
+
+  public getTags(): string[] {
+    return this.forumService.getTags();
   }
 }

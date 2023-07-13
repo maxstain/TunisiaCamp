@@ -2,11 +2,10 @@
   <p class="fs-2 custom-blue">Filters</p>
   <div>
     <p class="fw-bold">Categories</p>
-    <a
-      *ngFor="let category of getCategories()"
-      class="btn btn-outline-secondary text-start m-1"
-      >{{ category }}</a
-    >
+    <select class="form-select my-2" #categories (change)="selectCategory(categories)" aria-label="Default select example">
+          <option selected>All Categories</option>
+          <option *ngFor="let category of getCategories()" value="{{ category }}">{{ category }}</option>
+        </select>
   </div>
   <div>
     <p class="fw-bold">Tags #</p>
@@ -18,7 +17,6 @@
     </div>
   </div>
   <div *ngIf="isAdmin()">
-    <p class="fw-bold">Admin</p>
     <button
       class="btn btn-custom-blue-filled w-100 mx-1 my-4"
       data-bs-toggle="modal"

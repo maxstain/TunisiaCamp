@@ -22,6 +22,11 @@ export class TopicComponent implements OnInit {
   @ViewChild('popup') popup!: ElementRef;
 
   public comment!: string;
+  public comments!: Comment[];
+  public commentsCount!: number;
+  public category!: string;
+  public title!: string;
+  public description!: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -40,6 +45,9 @@ export class TopicComponent implements OnInit {
       // this.forum = this.forumService.getForum(this.id);
     });
     this.user = this.authService.getUser();
+    this.title = this.forum.getTitle();
+    this.description = this.forum.getDescription();
+    this.category = this.forum.getCategory();
   }
 
   public deleteForumFromServer() {
@@ -48,7 +56,22 @@ export class TopicComponent implements OnInit {
   }
 
   public editForumInServer() {
-    this.router.navigate(['/edit-forum', this.forum.getId()]);
+    let newForum = new Forum(
+      this.forum.getId(),
+      this.title ? this.title : this.forum.getTitle(),
+      this.description ? this.description : this.forum.getDescription(),
+      this.forum.getCreationDate(),
+      this.forum.getAuthor(),
+      this.forum.getTags(),
+      this.forum.getLikes(),
+      this.forum.getDislikes(),
+      this.forum.getStatus(),
+      this.category ? this.category : this.forum.getCategory(),
+      this.forum.getFeedbacks(),
+      this.forum.getComplaints()
+    );
+    this.forumService.editForumOnServer(newForum);
+    this.forumService.refreshPage();
   }
 
   public closeForumInServer() {
@@ -64,7 +87,9 @@ export class TopicComponent implements OnInit {
   }
 
   public getFeedbacks() {
-    return this.forum.getFeedbacks();
+    return this.forum.getFeedbacks().filter((feedback) => {
+      return feedback.getCreatedAt() <= new Date().toUTCString();
+    });
   }
 
   public getForum() {
@@ -77,11 +102,15 @@ export class TopicComponent implements OnInit {
 
   public addComment(comment: string) {
     comment = comment.trim();
+
     if (!comment) {
       return;
     }
+    this.forumService.getFeedbacksCountFromServer().then((id) => {
+      this.commentsCount = id;
+    });
     let newComment = new Comment(
-      this.forum.getFeedbacks().length,
+      this.commentsCount + 1,
       comment,
       'neutral',
       1,
@@ -122,5 +151,14 @@ export class TopicComponent implements OnInit {
 
   public unDislike() {
     this.forumService.unDislikeForum(this.forum);
+  }
+
+  public getCategories(): string[] {
+    return this.forumService.getCategories();
+  }
+
+  public selectCategory(category: HTMLSelectElement) {
+    this.category = category.value;
+    console.log('selected', this.category);
   }
 }

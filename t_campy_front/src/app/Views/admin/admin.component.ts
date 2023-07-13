@@ -16,7 +16,7 @@ export class AdminComponent {
   user!: User;
   route: string = this.router.url;
   view: string = 'dashboard';
-  complaints: Complaint[] = [];
+  complaints!: Complaint[];
   public complaint!: Complaint;
 
   constructor(

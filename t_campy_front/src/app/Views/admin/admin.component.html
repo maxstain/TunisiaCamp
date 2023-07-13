@@ -60,7 +60,7 @@
                 <table class="table" *ngIf="complaints.length != 0">
                   <thead>
                     <tr>
-                      <th scope="col">ID #</th>
+                      <th scope="col">User ID #</th>
                       <th scope="col">Objet</th>
                       <th scope="col">Date</th>
                       <th scope="col">Actions</th>
@@ -68,7 +68,7 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let complaint of complaints">
-                      <th scope="row">{{ complaint.id }}</th>
+                      <th scope="row">{{ complaint.user_id }}</th>
                       <td class="fw-bold">{{ complaint.object }}</td>
                       <td>{{ complaint.date.toUTCString() }}</td>
                       <td>
