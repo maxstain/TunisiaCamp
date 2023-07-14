@@ -41,8 +41,8 @@ export class TopicComponent implements OnInit {
       this.id = params['id'];
       this.forumService.fetchForumFromServer(this.id).then((forum) => {
         this.forum = forum;
+        this.comments = this.forum.getFeedbacks();
       });
-      // this.forum = this.forumService.getForum(this.id);
     });
     this.user = this.authService.getUser();
     this.title = this.forum.getTitle();
@@ -52,7 +52,9 @@ export class TopicComponent implements OnInit {
 
   public deleteForumFromServer() {
     this.forumService.deleteForumFromServer(this.forum);
-    // this.forumService.deleteForum(this.forum);
+    this.router.navigate(['/forums']).then(() => {
+      window.location.reload();
+    });
   }
 
   public editForumInServer() {
@@ -70,7 +72,7 @@ export class TopicComponent implements OnInit {
       this.forum.getFeedbacks(),
       this.forum.getComplaints()
     );
-    this.forumService.editForumOnServer(newForum);
+    this.forumService.updateForumOnServer(newForum);
     this.forumService.refreshPage();
   }
 

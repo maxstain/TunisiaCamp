@@ -99,7 +99,8 @@ export class ForumService {
     try {
       await this.http
         .post<Forum>('http://localhost:8089/forum/add-forum', forum.toJson())
-        .subscribe((forum: any) => {
+        .toPromise()
+        .then((forum: any) => {
           this.forums.push(Forum.fromJson(forum));
         });
     } catch (error) {
@@ -110,35 +111,22 @@ export class ForumService {
         duration: 3000,
       });
     }
-    this.refreshPage();
   }
 
-  public async updateForumOnServer(Forum: Forum): Promise<void> {
+  public async updateForumOnServer(forum: Forum): Promise<void> {
     try {
       await this.http
         .put<Forum>(
-          'http://localhost:8089/forum/update-forum/' + Forum.getId(),
-          Forum.toJson()
+          'http://localhost:8089/forum/update-forum/' + forum.getId(),
+          forum.toJson()
         )
-        .subscribe(async (Forum: any) => {
-          (await this.forums)
-            .find((t) => t.getId() === Forum.getId())!
-            .getTitle();
-          (await this.forums)
-            .find((t) => t.getId() === Forum.getId())!
-            .getDescription();
-          (await this.forums)
-            .find((t) => t.getId() === Forum.getId())!
-            .getCategory();
-          (await this.forums)
-            .find((t) => t.getId() === Forum.getId())!
-            .getLikes();
-          (await this.forums)
-            .find((t) => t.getId() === Forum.getId())!
-            .getDislikes();
-          (await this.forums)
-            .find((t) => t.getId() === Forum.getId())!
-            .getFeedbacks();
+        .toPromise()
+        .then((forum: any) => {
+          this.forums.splice(
+            this.forums.findIndex((t) => t.getId() === forum.getId()),
+            1,
+            Forum.fromJson(forum)
+          );
         });
     } catch (error) {
       console.log(error);
@@ -148,7 +136,6 @@ export class ForumService {
         duration: 3000,
       });
     }
-    this.refreshPage();
   }
 
   public async countOpenedForums(): Promise<number> {
@@ -198,7 +185,6 @@ export class ForumService {
     } catch (error) {
       console.log(error);
     }
-    this.refreshPage();
   }
 
   public async getForumById(id: string): Promise<Forum> {

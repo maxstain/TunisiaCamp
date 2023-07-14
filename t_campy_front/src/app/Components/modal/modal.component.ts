@@ -77,7 +77,9 @@ export class ModalComponent {
     }
     this.title = '';
     this.description = '';
-    this.router.navigate(['/forums']);
+    this.router.navigate(['/forums']).then(() => {
+      window.location.reload();
+    });
   }
 
   public addComplaint(): void {

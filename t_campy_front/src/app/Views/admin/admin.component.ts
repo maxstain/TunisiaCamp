@@ -66,7 +66,9 @@ export class AdminComponent {
       console.log('complaints', this.complaints);
     });
 
-    this.router.navigate(['/admin']);
+    this.router.navigate(['/admin']).then(() => {
+      window.location.reload();
+    });
   }
 
   public async fetchComplaintFromServer(complaintId: number) {

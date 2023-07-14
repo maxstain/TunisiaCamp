@@ -105,7 +105,6 @@ export class ComplaintService {
         duration: 3000,
       });
     }
-    this.refreshPage();
   }
 
   public async updateComplaintFromServer(complaint: Complaint) {
