@@ -41,10 +41,10 @@ export class TopicComponent implements OnInit {
       this.forumService.fetchForumFromServer(this.id).then((forum) => {
         this.forum = forum;
         console.log('Forum title: ', this.forum.getTitle());
-        this.comments = this.forum.getFeedbacks();
-        this.commentsCount = this.comments.length;
       });
     });
+    this.comments = this.forum.getFeedbacks();
+    this.commentsCount = this.comments.length;
     this.user = this.authService.getUser();
     this.title = this.forum.getTitle();
     this.description = this.forum.getDescription();
@@ -97,9 +97,7 @@ export class TopicComponent implements OnInit {
   }
 
   public getFeedbacks() {
-    return this.forum.getFeedbacks().filter((feedback) => {
-      return feedback.getCreatedAt() <= new Date().toUTCString();
-    });
+    return this.forum.getFeedbacks();
   }
 
   public getForum() {
