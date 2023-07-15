@@ -205,26 +205,19 @@ export class ForumService {
   }
 
   public async addCommentToForumOnServer(forum: Forum, comment: Comment) {
-    try {
-      await this.http
-        .post<Forum>(
-          'http://localhost:8089/Feedback/add-Feedback/' + forum.getId(),
-          comment.toJson()
-        )
-        .subscribe(async (Forum: any) => {
-          (await this.forums)
-            .find((t) => t.getId() === Forum.getId())!
-            .addComment(Comment.fromJson(Forum));
-        });
-    } catch (error) {
-      console.log(error);
-      this.snackbar.open('Error while adding Comment', 'Close', {
-        horizontalPosition: 'center',
-        verticalPosition: 'top',
-        duration: 3000,
+    await this.http
+      .post<Forum>(
+        'http://localhost:8089/Feedback/add-Feedback/' + forum.getId(),
+        comment.toJson()
+      )
+      .subscribe(async (Forum: any) => {
+        await this.http
+          .post(
+            'http://localhost:8089/forum/assign-Feedback-To-Forum',
+            forum.getId() + '/' + comment.getId()
+          )
+          .subscribe();
       });
-    }
-    this.refreshPage();
   }
 
   public addComment(Forum: Forum, comment: Comment) {
@@ -385,12 +378,42 @@ export class ForumService {
     window.location.reload();
   }
 
+  public async getFeedbacksOfForumOnServer(forum: Forum): Promise<Comment[]> {
+    try {
+      await this.http
+        .get<Comment[]>(
+          'http://localhost:8089/Feedback/retrieve-all-Feedbacks/' +
+            forum.getId()
+        )
+        .toPromise()
+        .then((comments: any) => {
+          forum.setFeedbacks(
+            comments.map((comment: any) => {
+              return Comment.fromJson(comment);
+            })
+          );
+        });
+      return forum.getFeedbacks();
+    } catch (error) {
+      console.log(error);
+      this.snackbar.open('Error while fetching Comments', 'Close', {
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        duration: 3000,
+      });
+      return [];
+    }
+  }
+
   public async getFeedbacksFromServer(): Promise<Comment[]> {
     try {
       await this.http
         .get<Comment[]>('http://localhost:8089/Feedback/retrieve-all-feedbacks')
-        .subscribe((comments: any) => {
-          this.comments = comments;
+        .toPromise()
+        .then((comments: any) => {
+          this.comments = comments.map((comment: any) => {
+            return Comment.fromJson(comment);
+          });
         });
       return this.comments;
     } catch (error) {
@@ -404,51 +427,7 @@ export class ForumService {
     }
   }
 
-  public async getFeedbacksCountFromServer(): Promise<number> {
-    let commentsCount = 0;
-    try {
-      await this.http
-        .get<number>(
-          'http://localhost:8089/Feedback/retrieve-all-feedbacks-count'
-        )
-        .subscribe((comments: any) => {
-          for (let i = 0; i < Comment.fromJsonArray(comments).length; i++) {
-            commentsCount++;
-          }
-        });
-      return commentsCount;
-    } catch (error) {
-      console.log(error);
-      this.snackbar.open('Error while fetching Comments', 'Close', {
-        horizontalPosition: 'center',
-        verticalPosition: 'top',
-        duration: 3000,
-      });
-      return 0;
-    }
-  }
-
-  public async editForumOnServer(forum: Forum) {
-    try {
-      await this.http
-        .put<Forum>(
-          'http://localhost:8089/forum/update-forum/' + forum.getId(),
-          forum.toJson()
-        )
-        .subscribe(async (forum: any) => {
-          (await this.forums).splice(
-            (await this.forums).findIndex((t) => t.getId() === forum.getId()),
-            1,
-            Forum.fromJson(forum)
-          );
-        });
-    } catch (error) {
-      console.log(error);
-      this.snackbar.open('Error while updating Forum', 'Close', {
-        horizontalPosition: 'center',
-        verticalPosition: 'top',
-        duration: 3000,
-      });
-    }
+  public async getFeedbackById(id: number): Promise<Comment> {
+    return (await this.comments).find((t) => t.getId() === id)!;
   }
 }

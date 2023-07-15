@@ -112,7 +112,7 @@ export class Forum {
   }
 
   public getFeedbacks(): Comment[] {
-    return this.feedbacks;
+    return this.feedbacks ? this.feedbacks : [];
   }
 
   public getId(): string {
@@ -212,5 +212,9 @@ export class Forum {
 
   public getCampingId(): number {
     return this.campingId;
+  }
+
+  public setFeedbacks(feedbacks: Comment[]) {
+    this.feedbacks = feedbacks;
   }
 }

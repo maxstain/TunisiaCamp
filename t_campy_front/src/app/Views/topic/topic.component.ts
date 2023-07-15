@@ -19,12 +19,12 @@ export class TopicComponent implements OnInit {
   user!: User;
   id!: number;
   sub!: any;
-  public comment!: string;
-  public comments!: Comment[];
-  public commentsCount!: number;
-  public category!: string;
-  public title!: string;
-  public description!: string;
+  public comment: string = '';
+  public comments: Comment[] = [];
+  public commentsCount: number = 0;
+  public category: string = '';
+  public title: string = '';
+  public description: string = '';
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -38,10 +38,9 @@ export class TopicComponent implements OnInit {
     this.forumService = this.forumService.getInstance();
     this.sub = this.activatedRoute.params.subscribe((params: Params) => {
       this.id = params['id'];
-      this.forumService.fetchForumFromServer(this.id).then((forum) => {
-        this.forum = forum;
-        console.log('Forum title: ', this.forum.getTitle());
-      });
+    });
+    this.forumService.fetchForumFromServer(this.id).then((forum) => {
+      this.forum = forum;
     });
     this.comments = this.forum.getFeedbacks();
     this.commentsCount = this.comments.length;
@@ -63,27 +62,31 @@ export class TopicComponent implements OnInit {
   }
 
   public editForumInServer() {
+    if (this.title == '') {
+      this.title = this.forum.getTitle();
+    }
+    if (this.description == '') {
+      this.description = this.forum.getDescription();
+    }
+    if (this.category == '') {
+      this.category = this.forum.getCategory();
+    }
     let newForum = new Forum(
       this.forum.getId(),
-      this.title != null || this.title != undefined || this.title != ''
-        ? this.title
-        : this.forum.getTitle(),
-      this.description != null ||
-      this.description != undefined ||
-      this.description != ''
-        ? this.description
-        : this.forum.getDescription(),
-      this.forum.getCreationDate(),
+      this.title,
+      this.description,
+      new Date(this.forum.getDate()),
       this.forum.getAuthor(),
       this.forum.getTags(),
       this.forum.getLikes(),
       this.forum.getDislikes(),
       this.forum.getStatus(),
-      this.category != null || this.category != undefined || this.category != ''
-        ? this.category
-        : this.forum.getCategory(),
+      this.category,
       this.forum.getCampingId()
     );
+    console.log('Forum title: ', newForum.getTitle());
+    console.log('Forum description: ', newForum.getDescription());
+    console.log('Forum Category: ', newForum.getCategory());
     this.forumService.updateForumOnServer(newForum);
     this.forumService.refreshPage();
   }
@@ -112,10 +115,19 @@ export class TopicComponent implements OnInit {
     comment = comment.trim();
 
     if (!comment) {
+      this.snackbar.open('Please fill all the fields', 'Close', {
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        duration: 3000,
+      });
+      console.log('Forum title: ', this.forum.getTitle());
+      console.log('Forum description: ', this.forum.getDescription());
+      console.log('Forum Category: ', this.forum.getCategory());
       return;
     }
-    this.forumService.getFeedbacksCountFromServer().then((id) => {
-      this.commentsCount = id;
+    this.forumService.getFeedbacksFromServer().then((comments) => {
+      this.comments = comments ? comments : [];
+      this.commentsCount = this.comments.length;
     });
     let newComment = new Comment(
       this.commentsCount + 1,
@@ -126,9 +138,25 @@ export class TopicComponent implements OnInit {
       new Date(),
       new Date()
     );
-    // this.forumService.addCommentToServer(this.forum, newComment);
-    this.forumService.addCommentToForumOnServer(this.forum, newComment);
+    this.comments.push(newComment);
+    try {
+      this.forumService.addCommentToForumOnServer(this.forum, newComment);
+    } catch (error) {
+      console.log(error);
+      this.snackbar.open('Error while adding Comment', 'Close', {
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        duration: 3000,
+      });
+      return;
+    }
     this.comment = '';
+    this.snackbar.open('Comment added', 'Close', {
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      duration: 3000,
+    });
+    this.forumService.refreshPage();
   }
 
   public fetchCommentAuthorFromId(id: number) {
