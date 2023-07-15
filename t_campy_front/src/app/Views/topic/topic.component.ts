@@ -50,6 +50,10 @@ export class TopicComponent implements OnInit {
     this.category = this.forum.getCategory();
   }
 
+  ngOnDestroy() {
+    if (this.sub) this.sub.unsubscribe();
+  }
+
   public deleteForumFromServer() {
     this.forumService.deleteForumFromServer(this.forum);
     this.router.navigate(['/forums']).then(() => {
@@ -78,10 +82,6 @@ export class TopicComponent implements OnInit {
 
   public closeForumInServer() {
     this.forumService.closeForum(this.forum);
-  }
-
-  ngOnDestroy() {
-    if (this.sub) this.sub.unsubscribe();
   }
 
   onBack(): void {
