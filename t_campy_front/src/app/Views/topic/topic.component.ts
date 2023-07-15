@@ -13,14 +13,12 @@ import { ForumService } from 'src/app/Services/forum.service';
   styleUrls: ['./topic.component.scss'],
 })
 export class TopicComponent implements OnInit {
+  @ViewChild('popup') popup!: ElementRef;
   @Input()
-  public forum!: Forum;
+  public forum: Forum = Forum.empty();
   user!: User;
   id!: number;
   sub!: any;
-
-  @ViewChild('popup') popup!: ElementRef;
-
   public comment!: string;
   public comments!: Comment[];
   public commentsCount!: number;
@@ -37,6 +35,7 @@ export class TopicComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.forumService = this.forumService.getInstance();
     this.sub = this.activatedRoute.params.subscribe((params: Params) => {
       this.id = params['id'];
       this.forumService.fetchForumFromServer(this.id).then((forum) => {

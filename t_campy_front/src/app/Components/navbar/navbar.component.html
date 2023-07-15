@@ -18,16 +18,15 @@
         routerLink="/admin"
         >Dashboard</a
       >
-      <a
-        matBadge="{{ notifications.length }}"
-        matBadgeColor="warn"
-        matBadgeHidden="false"
-        matBadgeSize="small"
-        class="p-1 fw-bold text-dark nav-link"
-        routerLink=""
-      >
+      <button class="p-1 fw-bold text-dark btn position-relative">
         <i class="bi bi-bell-fill"></i>
-      </a>
+        <span
+          *ngIf="notifications.length != 0"
+          class="position-absolute p-1 top-0 start-100 translate-middle badge rounded-pill bg-danger z-index-1"
+        >
+          {{ notifications.length }}
+        </span>
+      </button>
     </div>
     <!-- The Authentication block: TODO -->
     <div *ngIf="!isLogged" class="d-flex mx-2">

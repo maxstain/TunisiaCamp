@@ -40,6 +40,15 @@ export class ForumService {
     this.tags = ['Camping', 'Product Reviews', 'Places to Visit'];
   }
 
+  public getInstance(): ForumService {
+    return new ForumService(
+      this.http,
+      this.router,
+      this.authService,
+      this.snackbar
+    );
+  }
+
   getTags(): string[] {
     return this.tags;
   }

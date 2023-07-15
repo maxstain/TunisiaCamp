@@ -31,15 +31,6 @@ export class NavbarComponent {
 
   constructor(private router: Router, private authService: AuthService) {
     this.routerlink = router;
-    if (this.notifications.length == 0) {
-      this.hidden = true;
-    } else {
-      this.hidden = false;
-    }
-  }
-
-  toggleBadgeVisibility() {
-    this.hidden = !this.hidden;
   }
 
   logout() {
