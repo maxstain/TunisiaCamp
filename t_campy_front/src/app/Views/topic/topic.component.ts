@@ -40,7 +40,9 @@ export class TopicComponent implements OnInit {
       this.id = params['id'];
       this.forumService.fetchForumFromServer(this.id).then((forum) => {
         this.forum = forum;
+        console.log('Forum title: ', this.forum.getTitle());
         this.comments = this.forum.getFeedbacks();
+        this.commentsCount = this.comments.length;
       });
     });
     this.user = this.authService.getUser();
@@ -63,17 +65,24 @@ export class TopicComponent implements OnInit {
   public editForumInServer() {
     let newForum = new Forum(
       this.forum.getId(),
-      this.title ? this.title : this.forum.getTitle(),
-      this.description ? this.description : this.forum.getDescription(),
+      this.title != null || this.title != undefined || this.title != ''
+        ? this.title
+        : this.forum.getTitle(),
+      this.description != null ||
+      this.description != undefined ||
+      this.description != ''
+        ? this.description
+        : this.forum.getDescription(),
       this.forum.getCreationDate(),
       this.forum.getAuthor(),
       this.forum.getTags(),
       this.forum.getLikes(),
       this.forum.getDislikes(),
       this.forum.getStatus(),
-      this.category ? this.category : this.forum.getCategory(),
-      this.forum.getFeedbacks(),
-      this.forum.getComplaints()
+      this.category != null || this.category != undefined || this.category != ''
+        ? this.category
+        : this.forum.getCategory(),
+      this.forum.getCampingId()
     );
     this.forumService.updateForumOnServer(newForum);
     this.forumService.refreshPage();

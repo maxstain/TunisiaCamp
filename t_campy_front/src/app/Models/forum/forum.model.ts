@@ -12,9 +12,9 @@ export class Forum {
   private dislikes: number;
   private Status: string;
   private category: string;
-  private feedbacks: Comment[];
-  private complaints: Complaint[];
-  private camping: any = {};
+  private feedbacks!: Comment[];
+  private complaints!: Complaint[];
+  private campingId: number;
 
   constructor(
     id: string,
@@ -27,8 +27,7 @@ export class Forum {
     dislikes: number,
     Status: string,
     category: string,
-    feedbacks: Comment[],
-    complaints: Complaint[]
+    campingId: number
   ) {
     this.id = id;
     this.title = title;
@@ -40,8 +39,7 @@ export class Forum {
     this.dislikes = dislikes;
     this.Status = Status;
     this.category = category;
-    this.feedbacks = feedbacks;
-    this.complaints = complaints;
+    this.campingId = campingId;
   }
 
   public static fromJson(json: any): Forum {
@@ -59,8 +57,7 @@ export class Forum {
       json.dislikes,
       json.status,
       json.category,
-      Comment.fromJsonArray(json.feedbacks),
-      Complaint.fromJsonArray(json.complaints)
+      json.camping
     );
   }
 
@@ -84,9 +81,9 @@ export class Forum {
       dislikes: this.dislikes,
       status: this.Status,
       category: this.category,
-      feedbacks: this.feedbacks.map((f) => f.toJson()),
-      complaints: this.complaints.map((c) => c.toJson()),
-      camping: this.camping,
+      feedbacks: this.feedbacks,
+      complaints: this.complaints,
+      camping: this.campingId,
     };
   }
 
@@ -206,10 +203,14 @@ export class Forum {
   }
 
   public static empty(): Forum {
-    return new Forum('0', '', '', new Date(), '', '', 0, 0, '', '', [], []);
+    return new Forum('0', '', '', new Date(), '', '', 0, 0, '', '', 0);
   }
 
   public tagsToArray(): string[] {
     return this.getTags().split(',');
+  }
+
+  public getCampingId(): number {
+    return this.campingId;
   }
 }

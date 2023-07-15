@@ -57,8 +57,7 @@ export class ModalComponent {
       0,
       'Open',
       this.category,
-      [],
-      []
+      1
     );
     try {
       this.forumService.addForumToServer(this.forum); // add Forum to server
