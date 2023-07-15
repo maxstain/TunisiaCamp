@@ -25,29 +25,28 @@
             <i class="px-1 bi bi-hand-thumbs-down">{{ forum.getDislikes() }}</i>
           </button>
         </div>
-        <div class="ms-5">
+        <div class="ms-5 btn-group">
           <button
-            class="btn"
-            mat-icon-button
-            [matMenuTriggerFor]="menu"
-            aria-label="Example icon-button with a menu"
+            class="btn btn-outline-transparent"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
           >
             <mat-icon>more_vert</mat-icon>
           </button>
-          <mat-menu #menu="matMenu" id="menu">
-            <button (click)="deleteForumFromServer()" mat-menu-item>
+          <ul class="dropdown-menu">
+            <button class="dropdown-item btn d-flex flex-row align-items-center" (click)="deleteForumFromServer()">
               <mat-icon class="text-danger">delete</mat-icon>
               <span>Delete</span>
             </button>
             <button
+              class="dropdown-item btn d-flex flex-row align-items-center"
               data-bs-toggle="modal"
               data-bs-target="#topicEditModal"
-              mat-menu-item
             >
               <mat-icon>edit</mat-icon>
               <span>Edit</span>
             </button>
-          </mat-menu>
+          </ul>
         </div>
       </div>
     </div>
@@ -166,9 +165,19 @@
             placeholder="Description"
           ></textarea>
         </div>
-        <select class="form-select" #categories (change)="selectCategory(categories)" aria-label="Default select example">
+        <select
+          class="form-select"
+          #categories
+          (change)="selectCategory(categories)"
+          aria-label="Default select example"
+        >
           <option selected>-- Choose a category --</option>
-          <option *ngFor="let category of getCategories()" value="{{ category }}">{{ category }}</option>
+          <option
+            *ngFor="let category of getCategories()"
+            value="{{ category }}"
+          >
+            {{ category }}
+          </option>
         </select>
       </div>
       <div class="modal-footer">
