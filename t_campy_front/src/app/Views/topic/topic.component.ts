@@ -83,6 +83,8 @@ export class TopicComponent implements OnInit {
         this.forum.getDislikes(),
         this.forum.getStatus(),
         this.category,
+        this.forum.getFeedbacks(),
+        this.forum.getComplaints(),
         this.forum.getCampingId()
       );
       this.forumService.updateForumOnServer(newForum);

@@ -56,6 +56,8 @@ export class ModalComponent {
       0,
       'Open',
       this.category,
+      [],
+      [],
       1
     );
     try {

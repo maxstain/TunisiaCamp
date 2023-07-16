@@ -27,6 +27,8 @@ export class Forum {
     dislikes: number,
     Status: string,
     category: string,
+    feedbacks: Comment[],
+    complaints: Complaint[],
     campingId: number
   ) {
     this.id = id;
@@ -39,6 +41,8 @@ export class Forum {
     this.dislikes = dislikes;
     this.Status = Status;
     this.category = category;
+    this.feedbacks = feedbacks;
+    this.complaints = complaints;
     this.campingId = campingId;
   }
 
@@ -57,6 +61,8 @@ export class Forum {
       json.dislikes,
       json.status,
       json.category,
+      Comment.fromJsonArray(json.feedbacks),
+      Complaint.fromJsonArray(json.complaints),
       json.camping
     );
   }
@@ -203,7 +209,7 @@ export class Forum {
   }
 
   public static empty(): Forum {
-    return new Forum('0', '', '', new Date(), '', '', 0, 0, '', '', 0);
+    return new Forum('0', '', '', new Date(), '', '', 0, 0, '', '', [], [], 0);
   }
 
   public tagsToArray(): string[] {
