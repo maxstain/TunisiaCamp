@@ -13,7 +13,7 @@ export class QuestionsListComponent {
   numberOfOpenedForums: number = 0;
   numberOfClosedForums: number = 0;
   closedForums: Forum[] = [];
-  forums!: Forum[];
+  forums: Forum[] = [];
   Status: string = 'all';
 
   constructor(private forumService: ForumService) {}

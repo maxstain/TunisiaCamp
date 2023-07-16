@@ -11,10 +11,10 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class ForumService {
-  public forums!: Forum[];
-  Forum!: Forum;
-  public tags!: string[];
-  public comments!: Comment[];
+  public forums: Forum[] = [];
+  Forum: Forum = Forum.empty();
+  public tags: string[] = [];
+  public comments: Comment[] = [];
 
   public Categories: string[] = [
     'Camping',
@@ -129,10 +129,9 @@ export class ForumService {
           'http://localhost:8089/forum/update-forum/' + forum.getId(),
           forum.toJson()
         )
-        .toPromise()
-        .then((forum: any) => {
-          this.forums.splice(
-            this.forums.findIndex((t) => t.getId() === forum.getId()),
+        .subscribe(async (forum: any) => {
+          (await this.forums).splice(
+            (await this.forums).findIndex((t) => t.getId() === forum.getId()),
             1,
             Forum.fromJson(forum)
           );
@@ -211,12 +210,9 @@ export class ForumService {
         comment.toJson()
       )
       .subscribe(async (Forum: any) => {
-        await this.http
-          .post(
-            'http://localhost:8089/forum/assign-Feedback-To-Forum',
-            forum.getId() + '/' + comment.getId()
-          )
-          .subscribe();
+        (await this.forums)
+          .find((t) => t.getId() === Forum.getId())!
+          .addComment(Comment.fromJson(Forum));
       });
   }
 

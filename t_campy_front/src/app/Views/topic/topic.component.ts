@@ -71,23 +71,29 @@ export class TopicComponent implements OnInit {
     if (this.category == '') {
       this.category = this.forum.getCategory();
     }
-    let newForum = new Forum(
-      this.forum.getId(),
-      this.title,
-      this.description,
-      new Date(this.forum.getDate()),
-      this.forum.getAuthor(),
-      this.forum.getTags(),
-      this.forum.getLikes(),
-      this.forum.getDislikes(),
-      this.forum.getStatus(),
-      this.category,
-      this.forum.getCampingId()
-    );
-    console.log('Forum title: ', newForum.getTitle());
-    console.log('Forum description: ', newForum.getDescription());
-    console.log('Forum Category: ', newForum.getCategory());
-    this.forumService.updateForumOnServer(newForum);
+    try {
+      let newForum = new Forum(
+        this.forum.getId(),
+        this.title,
+        this.description,
+        new Date(this.forum.getDate()),
+        this.forum.getAuthor(),
+        this.forum.getTags(),
+        this.forum.getLikes(),
+        this.forum.getDislikes(),
+        this.forum.getStatus(),
+        this.category,
+        this.forum.getCampingId()
+      );
+      this.forumService.updateForumOnServer(newForum);
+    } catch (error) {
+      this.snackbar.open('Error', 'Close', {
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        duration: 3000,
+      });
+      return;
+    }
     this.forumService.refreshPage();
   }
 
@@ -125,25 +131,20 @@ export class TopicComponent implements OnInit {
       console.log('Forum Category: ', this.forum.getCategory());
       return;
     }
-    this.forumService.getFeedbacksFromServer().then((comments) => {
-      this.comments = comments ? comments : [];
-      this.commentsCount = this.comments.length;
-    });
+
     let newComment = new Comment(
-      this.commentsCount + 1,
+      0,
       comment,
       'neutral',
-      1,
+      this.user.getId(),
       Number(this.forum.getId()),
       new Date(),
       new Date()
     );
-    this.comments.push(newComment);
     try {
       this.forumService.addCommentToForumOnServer(this.forum, newComment);
     } catch (error) {
-      console.log(error);
-      this.snackbar.open('Error while adding Comment', 'Close', {
+      this.snackbar.open('Error', 'Close', {
         horizontalPosition: 'center',
         verticalPosition: 'top',
         duration: 3000,
@@ -151,11 +152,6 @@ export class TopicComponent implements OnInit {
       return;
     }
     this.comment = '';
-    this.snackbar.open('Comment added', 'Close', {
-      horizontalPosition: 'center',
-      verticalPosition: 'top',
-      duration: 3000,
-    });
     this.forumService.refreshPage();
   }
 

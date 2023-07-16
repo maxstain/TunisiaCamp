@@ -14,14 +14,13 @@ import { ForumService } from 'src/app/Services/forum.service';
   styleUrls: ['./modal.component.scss'],
 })
 export class ModalComponent {
-  forum!: Forum;
-  @Input() complaint!: Complaint;
-  forums!: Forum[];
-
-  title!: string;
-  description!: string;
-  category!: string;
-  complaintReply!: string;
+  @Input() complaint: Complaint = Complaint.empty();
+  forums: Forum[] = [];
+  forum: Forum = Forum.empty();
+  title: string = '';
+  description: string = '';
+  category: string = '';
+  complaintReply: string = '';
 
   constructor(
     private authService: AuthService,
@@ -60,12 +59,7 @@ export class ModalComponent {
       1
     );
     try {
-      this.forumService.addForumToServer(this.forum); // add Forum to server
-      this.snackBar.open('Forum added', 'Close', {
-        horizontalPosition: 'center',
-        verticalPosition: 'top',
-        duration: 3000,
-      });
+      this.forumService.addForumToServer(this.forum);
     } catch (error) {
       console.log(error);
       this.snackBar.open('Error while adding Forum', 'Close', {
@@ -73,12 +67,16 @@ export class ModalComponent {
         verticalPosition: 'top',
         duration: 3000,
       });
+      return;
     }
     this.title = '';
     this.description = '';
-    this.router.navigate(['/forums']).then(() => {
-      window.location.reload();
+    this.snackBar.open('Forum added', 'Close', {
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      duration: 3000,
     });
+    this.forumService.refreshPage();
   }
 
   public addComplaint(): void {
