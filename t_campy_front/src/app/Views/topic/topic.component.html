@@ -36,7 +36,7 @@
             </p>
           </div>
         </div>
-        <div class="ms-5 me-3 btn-group">
+        <div class="ms-5 me-3 btn-group" *ngIf="isAdmin()">
           <a
             class="text-dark"
             data-bs-toggle="dropdown"
@@ -45,7 +45,7 @@
           >
             <mat-icon>more_vert</mat-icon>
           </a>
-          <ul class="dropdown-menu" *ngIf="isAdmin()">
+          <ul class="dropdown-menu">
             <button
               class="dropdown-item btn p-2 d-flex flex-row align-items-center"
               (click)="deleteForumFromServer()"
@@ -113,8 +113,8 @@
               alt="user"
             />
             <p class="mx-2">{{ feedback.getUserId() }}</p>
-            
-           
+
+
           </div>
           <div class="d-flex align-items-center justify-content-center">
             <p class="text-secondary lh-1">{{ feedback.getCreatedAt() }}</p>
@@ -142,7 +142,7 @@
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                   role="button"
-                  
+
                 >
                   <mat-icon>more_vert</mat-icon>
                 </a>
@@ -150,7 +150,7 @@
                   <button
                     class="dropdown-item btn p-2 d-flex flex-row align-items-center"
                     (click)="deleteComment(feedback)"
-                    
+
                   >
                     <mat-icon class="text-danger">delete</mat-icon>
                     <span>Delete</span>
@@ -160,7 +160,7 @@
                     data-bs-toggle="modal"
                     data-bs-target="#topicEditModal"
                     (click)="changeComment(feedback)"
-                    
+
                   >
                     <mat-icon>edit</mat-icon>
                     <span >Edit</span>
@@ -168,9 +168,9 @@
                 </ul>
               </div>
           </div>
-          
+
         </div>
-        
+
         <div class="my-1 p-2">
           <p>{{ feedback.getComment() }}</p>
         </div>
@@ -204,7 +204,7 @@
   <div class="modal-dialog" >
     <div class="modal-content" *ngIf="isChangeForum">
       <div class="modal-header" >
-        
+
         <h1 class="modal-title fs-5" id="topicEditModalLabel">Edit</h1>
         <button
           type="button"
@@ -215,7 +215,7 @@
       </div>
       <div class="modal-body" >
         <div class="input-group mb-2" >
-          
+
             <input
             name="forumTitle"
             [value]="forum.getTitle()"
@@ -235,14 +235,14 @@
             class="form-control"
             aria-label="description"
             type="text"
-           
+
           ></textarea>
         </div>
         <select
           class="form-select"
           #categories
           (change)="selectCategory(categories)"
-          aria-label="Default select example" 
+          aria-label="Default select example"
         >
           <option selected>{{forum.getCategory()}}</option>
           <option
@@ -253,14 +253,14 @@
           </option>
         </select>
       </div>
-          
-         
-      
+
+
+
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Close
         </button>
-        
+
           <button
           type="button"
           class="btn btn-primary"
@@ -269,12 +269,12 @@
         >
           Edit Topic
         </button>
-        
+
       </div>
     </div>
     <div class="modal-content" *ngIf="ischangeComment">
       <div class="modal-header" >
-        
+
         <h1 class="modal-title fs-5" id="topicEditModalLabel">Edit Comment</h1>
         <button
           type="button"
@@ -285,7 +285,7 @@
       </div>
       <div class="modal-body" >
         <div class="input-group mb-2" >
-          
+
             <input
             name="comment"
             [(ngModel)]="comment"
@@ -295,16 +295,16 @@
             placeholder="comment"
           />
         </div>
-       
+
       </div>
-          
-         
-      
+
+
+
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Close
         </button>
-        
+
           <button
           type="button"
           class="btn btn-primary"
@@ -313,11 +313,10 @@
         >
           Edit comment
         </button>
-        
+
       </div>
     </div>
   </div>
 </div>
- 
 
- 
+
