@@ -2,6 +2,7 @@ package Esprit.CampProject.Team.service;
 
 import Esprit.CampProject.Team.entities.Groupe;
 import Esprit.CampProject.Team.entities.Offre;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 

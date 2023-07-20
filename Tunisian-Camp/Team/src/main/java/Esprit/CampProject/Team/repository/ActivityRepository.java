@@ -14,15 +14,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ActivityRepository extends  JpaRepository<Activity, Long>, JpaSpecificationExecutor<Activity> {
-//    default Optional<Activity> findOneWithEagerRelationships(Long id) {
-//        return this.fetchBagRelationships(this.findById(id));
-//    }
-//
-//    default List<Activity> findAllWithEagerRelationships() {
-//        return this.fetchBagRelationships(this.findAll());
-//    }
-//
-//    default Page<Activity> findAllWithEagerRelationships(Pageable pageable) {
-//        return this.fetchBagRelationships(this.findAll(pageable));
-//    }
+
+    List<Activity> findByGroupe_Id(Long groupId);
+
 }

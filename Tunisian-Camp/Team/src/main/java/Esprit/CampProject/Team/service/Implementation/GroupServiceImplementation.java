@@ -9,10 +9,15 @@ import Esprit.CampProject.Team.repository.OffreRepository;
 import Esprit.CampProject.Team.service.GroupService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.SecondaryTable;
+import java.io.File;
+import java.io.IOException;
+import java.util.Base64;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -30,8 +35,13 @@ public class GroupServiceImplementation implements GroupService {
     }
 
     @Override
-    public Groupe addGroup(Groupe group) {
-
+    public Groupe  addGroup(Groupe group) {
+//        if (group.getImage() != null) {
+//            String imageData = Base64.getEncoder().encodeToString(group.getImage());
+//            String base64Image = imageData.substring(imageData.indexOf(',') + 1);
+//            byte[] decodedImage = Base64.getDecoder().decode(base64Image);
+//            group.setImage(decodedImage);
+//        }
         Groupe savedGroup = groupRepo.save(group);
 
         // Set the group for each activity and save them
@@ -48,6 +58,7 @@ public class GroupServiceImplementation implements GroupService {
         return savedGroup;
 
     }
+
     @Override
     public Groupe createGroupWithOffre(Long groupId, Offre offre) {
         Groupe group = groupRepo.findById(groupId)

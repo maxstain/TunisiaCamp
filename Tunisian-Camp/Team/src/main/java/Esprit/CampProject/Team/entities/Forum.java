@@ -59,7 +59,7 @@ public class Forum implements Serializable {
     private String category;
 
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
     private Set<Feedback> feedbacks ;
 
     @OneToMany(cascade = CascadeType.ALL)

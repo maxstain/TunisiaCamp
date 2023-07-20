@@ -50,20 +50,20 @@ public class FeedbackRestController {
     }
     // http://localhost:8089/Feedback/delete-Feedback/{feedbackId}
 
-    @DeleteMapping("/delete-Feedback/{feedbackId}")
-    public void deleteFeedback(@PathVariable("feedbackId") Long feedbackId) {
-        feedbackService.deleteFeedback(feedbackId);
+    @DeleteMapping("/delete-Feedback/{forumId}/{feedbackId}")
+    public void deleteFeedback(@PathVariable("forumId") Long forumId,@PathVariable("feedbackId") Long feedbackId) {
+        feedbackService.deleteFeedback(forumId,feedbackId);
     }
     // http://localhost:8089/Feedback/add-like-Feedback/{feedbackId}
 
-    @PostMapping("/add-like-Feedback/{feedbackId}")
+    @PutMapping("/add-like-Feedback/{feedbackId}")
     public Feedback addLikeFeedbackAPI(@PathVariable("feedbackId") Long feedbackId) {
         Long likes = feedbackService.addLikesFeedback(feedbackId);
         return feedbackService.retrieveFeedback(feedbackId);
     }
     // http://localhost:8089/Feedback/add-dislike-Feedback/{feedbackId}
 
-    @PostMapping("/add-dislike-Feedback/{feedbackId}")
+    @PutMapping("/add-dislike-Feedback/{feedbackId}")
     public Feedback addDisLikeFeedbackAPI(@PathVariable("feedbackId") Long feedbackId) {
         Long dislikes = feedbackService.addDisLikesFeedback(feedbackId);
         return feedbackService.retrieveFeedback(feedbackId);

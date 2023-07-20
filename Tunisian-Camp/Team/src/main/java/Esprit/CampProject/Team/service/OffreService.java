@@ -9,10 +9,11 @@ public interface OffreService {
 
     Offre addOffre(Offre e);
 
-    Offre updateOffre (Offre e,Long OffreId);
+    Offre updateOffre (Offre e);
 
 
 
     void deleteOffre(Long OffreId);
     Offre retrieveOffreById (Long idOffre);
+    void registerUserForOffer(Long offerId, Long userId);
 }

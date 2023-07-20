@@ -14,5 +14,7 @@ public interface UserService {
     User retrieveUser (Long id);
 
     void deleteUser(Long id);
+    User registerNewUser(User user);
+    void initRoleAndUser();
 
 }

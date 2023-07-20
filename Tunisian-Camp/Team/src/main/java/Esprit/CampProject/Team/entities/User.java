@@ -41,8 +41,8 @@ public class User implements Serializable {
     @Column(name = "admin")
     private Boolean admin;
 
-    @Column(name = "groupe")
-    private String group;
+//    @Column(name = "groupe")
+//    private String group;
 
     @OneToOne
 
@@ -56,5 +56,16 @@ public class User implements Serializable {
    private Set<Groupe> groupes;
     @OneToMany(mappedBy = "user")
     private List<Reservation> reservations;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "USER_ROLE",
+            joinColumns = {
+                    @JoinColumn(name = "USER_ID")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "ROLE_ID")
+            }
+    )
+    private Set<Role> role;
 
 }

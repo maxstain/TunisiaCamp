@@ -3,6 +3,7 @@ package Esprit.CampProject.Team.service.Implementation;
 
 
 import Esprit.CampProject.Team.entities.Feedback;
+import Esprit.CampProject.Team.entities.Forum;
 import Esprit.CampProject.Team.repository.FeedbackRepository;
 import Esprit.CampProject.Team.repository.ForumRepository;
 import lombok.AllArgsConstructor;
@@ -45,15 +46,24 @@ public class FeedbackServiceImpl implements FeedbackService{
     }
 
     @Override
-    public void deleteFeedback(Long idFeedback) {
+    public void deleteFeedback(Long idForum,Long idFeedback) {
+        Forum forum = forumRepository.findById(idForum).get();
+        Feedback feedback=feedbackRepository.findById((idFeedback)).get();
+        forum.getFeedbacks().remove(feedback);
 
         feedbackRepository.deleteById(idFeedback);
+        forumRepository.save(forum);
 
     }
     @Override
     public Long addLikesFeedback(Long idFeedback) {
         Feedback feedback=feedbackRepository.findById(idFeedback).get();
         Long likes=feedback.getLikes()+1;
+        Long dislikes= feedback.getDislikes();
+        if (dislikes>=1){
+            dislikes=dislikes-1;
+        }
+        feedback.setDislikes(dislikes);
         feedback.setLikes(likes);
         feedbackRepository.save(feedback);
         return likes;
@@ -63,6 +73,11 @@ public class FeedbackServiceImpl implements FeedbackService{
     public Long addDisLikesFeedback(Long idFeedback) {
         Feedback feedback=feedbackRepository.findById(idFeedback).get();
         Long dislikes=feedback.getDislikes()+1;
+        Long likes= feedback.getLikes();
+        if (likes>=1){
+            likes=likes-1;
+        }
+        feedback.setLikes(likes);
         feedback.setDislikes(dislikes);
         feedbackRepository.save(feedback);
         return dislikes;

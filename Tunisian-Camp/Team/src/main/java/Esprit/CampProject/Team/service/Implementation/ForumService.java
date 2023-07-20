@@ -20,7 +20,8 @@ public interface ForumService {
     void assignFeedbackToForum(Long idForm,Long idFeedback);
     Long addLikesForum(Long idForm);
     Long addDisLikesForum(Long idForm);
-
+    Long unLikesForum(Long idForm);
+    Long unDisLikesForum(Long idForm);
     Forum addForumToCamping(Long idForum,Long idCamping);
     List<User> getUsersCamping(Long idForum);
 

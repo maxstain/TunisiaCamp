@@ -15,7 +15,8 @@ public class ForumRestController {
     // http://localhost:8089/forum/retrieve-all-forums
     @GetMapping("/retrieve-all-forums")
     public List<Forum> getForums() {
-        return forumService.retrieveAllForums();
+        List<Forum> listForums = forumService.retrieveAllForums();
+        return listForums;
     }
     // http://localhost:8089/forum/retrieve-forum/{forumId}"
 
@@ -27,7 +28,8 @@ public class ForumRestController {
     // http://localhost:8089/forum/add-forum"
     @PostMapping("/add-forum")
     public Forum addforum(@RequestBody Forum e) {
-        return forumService.addForum(e);
+        Forum forum = forumService.addForum(e);
+        return forum;
     }
     // http://localhost:8089/forum/update-forum/{forumId}
 
@@ -52,16 +54,30 @@ public class ForumRestController {
     }
 
     // http://localhost:8089/forum/add-like-Forum/{ForumId}
-    @PostMapping("/add-like-Forum/{ForumId}")
+    @PutMapping("/add-like-Forum/{ForumId}")
     public Forum addLikeForumAPI(@PathVariable("ForumId") Long forumId) {
         Long likes = forumService.addLikesForum(forumId);
         return forumService.retrieveForum(forumId);
     }
     // http://localhost:8089/forum/add-dislike-Forum/{ForumId}
 
-    @PostMapping("/add-dislike-Forum/{ForumId}")
+    @PutMapping("/add-dislike-Forum/{ForumId}")
     public Forum addDisLikeForumAPI(@PathVariable("ForumId") Long forumId) {
         Long likes = forumService.addDisLikesForum(forumId);
+        return forumService.retrieveForum(forumId);
+    }
+    // http://localhost:8089/forum/unlike-Forum/{ForumId}
+
+    @PutMapping("/unlike-Forum/{ForumId}")
+    public Forum unLikeForumAPI(@PathVariable("ForumId") Long forumId) {
+        Long likes = forumService.unLikesForum(forumId);
+        return forumService.retrieveForum(forumId);
+    }
+    // http://localhost:8089/forum/undislike-forum/{ForumId}
+
+    @PutMapping("/undislike-forum/{ForumId}")
+    public Forum unDisLikeForumAPI(@PathVariable("ForumId") Long forumId) {
+        Long likes = forumService.unDisLikesForum(forumId);
         return forumService.retrieveForum(forumId);
     }
     // http://localhost:8089/forum/assign-Forum-camping/{ForumId}/{CampingId}
