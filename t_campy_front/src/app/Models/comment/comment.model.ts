@@ -6,6 +6,8 @@ export class Comment {
   protected post_id!: number;
   protected created_at!: Date;
   protected updated_at!: Date;
+  public likes: number;
+  public dislikes: number;
 
   constructor(
     id: number = 0,
@@ -14,7 +16,9 @@ export class Comment {
     author_id: number,
     post_id: number,
     created_at: Date,
-    updated_at: Date
+    updated_at: Date,
+     likes: number,
+    dislikes: number,
   ) {
     this.id = id;
     this.comment = comment;
@@ -23,6 +27,8 @@ export class Comment {
     this.post_id = post_id;
     this.created_at = created_at;
     this.updated_at = updated_at;
+    this.likes = likes;
+    this.dislikes = dislikes;
   }
 
   public getId(): number {
@@ -31,6 +37,15 @@ export class Comment {
 
   public getComment(): string {
     return this.comment;
+  }
+  public getSentiment(): string {
+    return this.sentiment;
+  }
+  public getLikes(): number {
+    return this.likes;
+  }
+  public getDisLikes(): number {
+    return this.dislikes;
   }
 
   public getUserId(): number {
@@ -82,7 +97,7 @@ export class Comment {
   }
 
   public static empty(): Comment {
-    return new Comment(0, '', 'neutral', 0, 0, new Date(), new Date());
+    return new Comment(0, '', 'neutral', 0, 0, new Date(), new Date(),0,0);
   }
 
   public static fromJson(json: any): Comment {
@@ -96,7 +111,9 @@ export class Comment {
       json.author_id,
       json.post_id,
       new Date(json.created_at),
-      new Date(json.updated_at)
+      new Date(json.updated_at),
+      json.likes,
+      json.dislikes,
     );
   }
 
@@ -120,6 +137,8 @@ export class Comment {
       post_id: this.post_id,
       created_at: this.created_at,
       updated_at: this.updated_at,
+      likes: this.likes,
+      dislikes: this.dislikes,
     };
   }
 }

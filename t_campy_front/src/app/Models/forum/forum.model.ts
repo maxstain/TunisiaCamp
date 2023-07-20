@@ -2,7 +2,7 @@ import { Camping } from '../Camping/camping';
 import { Complaint } from '../Complaint/complaint';
 import { Comment } from '../comment/comment.model';
 export class Forum {
-  private id: string;
+   id!: number;
   private title: string;
   private description: string;
   private date: Date;
@@ -17,7 +17,7 @@ export class Forum {
   private camping: any = {};
 
   constructor(
-    id: string,
+    id: number,
     title: string,
     description: string,
     date: Date,
@@ -118,7 +118,7 @@ export class Forum {
     return this.feedbacks;
   }
 
-  public getId(): string {
+  public getId(): number {
     return this.id;
   }
 
@@ -200,13 +200,18 @@ export class Forum {
   public setCreationDate(date: Date) {
     this.date = date;
   }
-
+  public setLikes(like:number) {
+    this.likes=like;
+  }
+  public setDisLikes(dislike:number) {
+    this.dislikes=dislike;
+  }
   public getComplaints(): Complaint[] {
     return this.complaints;
   }
 
   public static empty(): Forum {
-    return new Forum('0', '', '', new Date(), '', '', 0, 0, '', '', [], []);
+    return new Forum(0, '', '', new Date(), '', '', 0, 0, '', '', [], []);
   }
 
   public tagsToArray(): string[] {

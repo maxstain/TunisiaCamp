@@ -1,0 +1,47 @@
+<form #f="ngForm"  (ngSubmit)="addGroup()">
+  <div class="form-group">
+    <label for="name" class="form-label mt-2" style=" margin-left:5pt;" >Name</label>
+    <input type="text" class="form-control" name="name" [(ngModel)]="group.name" style="width: 80%; margin-left:5pt;" required minlength="3" #title="ngModel">
+    <div *ngIf="title.invalid && title.touched" class="text-danger">
+      <div *ngIf="title.errors?.['required']">
+        Name is required.
+      </div>
+      <div *ngIf="title.errors?.['minlength']">
+        Name must be at least 3 characters.
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div *ngFor="let activity of group.activities; let i = index" class="mb-4">
+      <h3>Activity {{ i + 1 }}</h3>
+      <div class="form-group">
+        <label for="activityName">Activity Name</label>
+        <input type="text" class="form-control" id="activityName" name="activityName{{i}}" [(ngModel)]="activity.name" required>
+        <div *ngIf="groupForm.controls['activityName' + i]?.invalid && groupForm.controls['activityName' + i]?.touched" class="text-danger">
+          <div *ngIf="groupForm.controls['activityName' + i]?.errors?.['required']">
+            Activity name is required.
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="activityDescription">Activity Description</label>
+        <input type="text" class="form-control" id="activityDescription" name="activityDescription{{i}}" [(ngModel)]="activity.description" required>
+        <div *ngIf="groupForm.controls['activityDescription' + i]?.invalid && groupForm.controls['activityDescription' + i]?.touched" class="text-danger">
+          <div *ngIf="groupForm.controls['activityDescription' + i]?.errors?.['required']">
+            Activity description is required.
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn btn-danger mt-2" (click)="deleteActivity(i)">Delete</button>
+    </div>
+  </div>
+
+  <div>
+    <button type="button" class="btn btn-secondary mt-2 " style="margin-left: 5pt;" (click)="addActivity()">Add Activity</button>
+  </div>
+
+  <button type="submit" class="btn btn-primary mt-2"  style=" margin-left:5pt;">Add</button>
+  
+
+</form>

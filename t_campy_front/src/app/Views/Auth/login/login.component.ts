@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/Services/auth.service';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-login',
@@ -26,5 +27,6 @@ export class LoginComponent {
   login(): void {
     this.authService.login(this.username, this.password);
     this.router.navigate(['/']);
+    console.log(this.authService.getUserId())
   }
 }

@@ -45,6 +45,7 @@ export class AuthService {
     return localStorage.getItem('Admin') === 'true';
   }
 
+
   public setAdmin(): void {
     localStorage.setItem('Admin', 'true');
   }
@@ -54,9 +55,14 @@ export class AuthService {
       this.setToken('token');
       this.setUserId('1');
       this.setAdmin();
-    } else {
+    } 
+    if (username === 'amani' && password === 'amani'){
       this.setToken('token');
       this.setUserId('2');
+    }
+    else{
+      this.setToken('token');
+      this.setUserId('3');
     }
     this.setUsername(username);
     this.setPassword(password);
