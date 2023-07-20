@@ -211,11 +211,7 @@ export class ForumService {
           'http://localhost:8089/Feedback/add-Feedback/' + forum.getId(),
           comment.toJson()
         )
-        .subscribe(async (Forum: any) => {
-          (await this.forums)
-            .find((t) => t.getId() === Forum.getId())!
-            .addComment(Comment.fromJson(Forum));
-        });
+        .subscribe();
     } catch (error) {
       console.log(error);
       this.snackbar.open('Error while adding Comment', 'Close', {
