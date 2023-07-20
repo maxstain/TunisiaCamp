@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class ForumService {
   public forums!: Forum[];
-  Forum!: Forum;
+  Forum: Forum = Forum.empty();
   public tags!: string[];
   public comments!: Comment[];
 
@@ -40,6 +40,7 @@ export class ForumService {
     this.tags = ['Camping', 'Product Reviews', 'Places to Visit'];
   }
 
+  // For robustness, we can use the following method to get an instance of the service:
   public getInstance(): ForumService {
     return new ForumService(
       this.http,
@@ -49,9 +50,12 @@ export class ForumService {
     );
   }
 
+  // This method is used to get the tags of the forums
   getTags(): string[] {
     return this.tags;
   }
+
+  // This method is used to get the forums from the server
   public async fetchForumsFromServer(): Promise<Forum[]> {
     try {
       return (this.forums = await this.http
@@ -73,6 +77,7 @@ export class ForumService {
     }
   }
 
+  // This method is used to get a single forum from the server
   public async fetchForumFromServer(id: number): Promise<Forum> {
     try {
       return (
@@ -81,7 +86,7 @@ export class ForumService {
           .toPromise()
           .then((forum: any) => {
             return Forum.fromJson(forum);
-          })) as Forum) ?? Forum.empty()
+          })) as Forum) ?? Forum.empty() // For robustness, we can use the following method to get an instance of the service:
       );
     } catch (error) {
       console.log(error);
@@ -94,22 +99,17 @@ export class ForumService {
     }
   }
 
-  // public getForum(id: number): Forum {
-  //   return (
-  //     this.forums.find((t) => t.getId() === id.toString())! ?? Forum.empty()
-  //   );
-  // }
-
+  // This method is used to get the forums
   public getForums(): Forum[] {
     return this.forums ?? [];
   }
 
+  // This method is used to add a forum to the server
   public async addForumToServer(forum: Forum): Promise<void> {
     try {
       await this.http
         .post<Forum>('http://localhost:8089/forum/add-forum', forum.toJson())
-        .toPromise()
-        .then((forum: any) => {
+        .subscribe((forum: any) => {
           this.forums.push(Forum.fromJson(forum));
         });
     } catch (error) {
@@ -131,6 +131,7 @@ export class ForumService {
         )
         .toPromise()
         .then((forum: any) => {
+          // This line is used to get the index of the forum to be updated in the array of forums and replace it with the new forum
           this.forums.splice(
             this.forums.findIndex((t) => t.getId() === forum.getId()),
             1,
@@ -157,16 +158,6 @@ export class ForumService {
     return i;
   }
 
-  public async countClosedForums(): Promise<number> {
-    let i: number = 0;
-    for (let Forum of await this.forums) {
-      if (!Forum.isOpened()) {
-        i++;
-      }
-    }
-    return i;
-  }
-
   public async getOpenedForums(): Promise<Forum[]> {
     return (await this.forums).filter((forum) => forum.isOpened()) ?? [];
   }
@@ -186,6 +177,7 @@ export class ForumService {
           'http://localhost:8089/forum/delete-forum/' + forum.getId()
         )
         .subscribe(async (forum: any) => {
+          // this line is used to remove the forum from the array of forums after deleting it from the server
           (await this.forums).splice(
             (await this.forums).findIndex((t) => t.getId() === forum.getId()),
             1
@@ -231,15 +223,13 @@ export class ForumService {
     try {
       await this.http
         .put<Forum>(
-          'http://localhost:8089/Feedback/update-Feedback/' +comment.getId(),
+          'http://localhost:8089/Feedback/update-Feedback/' + comment.getId(),
           comment.toJson()
         )
         .subscribe(async (Forum: any) => {
           (await this.forums)
             .find((t) => t.getId() === Forum.getId())!
-            .getFeedbacks()
-            .find((t) => t.getId() === Forum.getId())!
-            .getComment();
+            .getFeedbacks();
         });
     } catch (error) {
       console.log(error);
@@ -262,9 +252,6 @@ export class ForumService {
     return this.Categories;
   }
 
-  
-
-
   public async getClosedForums(): Promise<Forum[]> {
     return (await this.forums).filter((forum) => !forum.isOpened()) ?? [];
   }
@@ -277,20 +264,16 @@ export class ForumService {
   //   );
   //   this.refreshPage();
   // }
- 
- 
-  
-  
-  public  likeForum(forum: Forum) {
+
+  public likeForum(forum: Forum) {
     try {
-       this.http
+      this.http
         .put(
           'http://localhost:8089/forum/add-like-Forum/' + forum.getId(),
           forum.toJson()
         )
         .subscribe((data) => {
           this.fetchForumsFromServer();
-          
         });
     } catch (error) {
       console.log(error);
@@ -303,9 +286,9 @@ export class ForumService {
     this.refreshPage();
   }
 
-  public  dislikeForum(forum: Forum) {
+  public dislikeForum(forum: Forum) {
     try {
-       this.http
+      this.http
         .put(
           'http://localhost:8089/forum/add-dislike-Forum/' + forum.getId(),
           forum.toJson()
@@ -323,16 +306,16 @@ export class ForumService {
     }
     this.refreshPage();
   }
-  public  likeComment(feedback: Comment) {
+  public likeComment(feedback: Comment) {
     try {
-       this.http
+      this.http
         .put(
-          'http://localhost:8089/Feedback/add-like-Feedback/' + feedback.getId(),
+          'http://localhost:8089/Feedback/add-like-Feedback/' +
+            feedback.getId(),
           feedback.toJson()
         )
         .subscribe((data) => {
           this.fetchForumsFromServer();
-          
         });
     } catch (error) {
       console.log(error);
@@ -345,16 +328,16 @@ export class ForumService {
     this.refreshPage();
   }
 
-  public  DislikeComment(feedback: Comment) {
+  public DislikeComment(feedback: Comment) {
     try {
-       this.http
+      this.http
         .put(
-          'http://localhost:8089/Feedback/add-dislike-Feedback/' + feedback.getId(),
+          'http://localhost:8089/Feedback/add-dislike-Feedback/' +
+            feedback.getId(),
           feedback.toJson()
         )
         .subscribe((data) => {
           this.fetchForumsFromServer();
-          
         });
     } catch (error) {
       console.log(error);
@@ -410,7 +393,7 @@ export class ForumService {
   }
 
   public async getRecentForums(): Promise<Forum[]> {
-    return  this.forums.sort((a, b) => {
+    return this.forums.sort((a, b) => {
       return (
         new Date(b.getCreationDate()).getTime() -
         new Date(a.getCreationDate()).getTime()

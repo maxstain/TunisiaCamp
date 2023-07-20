@@ -46,12 +46,11 @@ export class ModalComponent {
       });
       return;
     }
-    
-  const maxID = Math.max(...this.forums.map(item => item.id));
 
- 
+    const maxID = Math.max(...this.forums.map((item) => item.id));
+
     this.forum = new Forum(
-      (maxID + 1),
+      maxID + 1,
       this.title,
       this.description,
       new Date(),
@@ -62,31 +61,22 @@ export class ModalComponent {
       'Open',
       this.category,
       [],
-      []
+      [],
+      Camping.empty()
     );
-    
-    try {
-      this.forumService.addForumToServer(this.forum); // add Forum to server
-      this.snackBar.open('Forum added', 'Close', {
-        horizontalPosition: 'center',
-        verticalPosition: 'top',
-        duration: 3000,
-      });
-    } catch (error) {
-      console.log(error);
-      this.snackBar.open('Error while adding Forum', 'Close', {
-        horizontalPosition: 'center',
-        verticalPosition: 'top',
-        duration: 3000,
-      });
-    }
+    this.forumService.addForumToServer(this.forum); // add Forum to server
+    this.snackBar.open('Forum added', 'Close', {
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      duration: 3000,
+    });
     this.title = '';
     this.description = '';
-    this.router.navigate(['/forums']).then(() => {
-      window.location.reload();
-    });
+    this.category = '';
+    this.forumService.fetchForumsFromServer();
+    this.forumService.refreshPage();
   }
-  
+
   public addComplaint(): void {
     if (!this.title || !this.description) {
       this.snackBar.open('Please fill all the fields', 'Close', {
@@ -96,9 +86,9 @@ export class ModalComponent {
       });
       return;
     }
-    const maxIDcomplaint = Math.max(...this.forums.map(item => item.id));
+    const maxIDcomplaint = Math.max(...this.forums.map((item) => item.id));
     this.complaint = new Complaint(
-      maxIDcomplaint+ 1,
+      maxIDcomplaint + 1,
       this.title,
       this.description,
       new Date(),
@@ -138,5 +128,4 @@ export class ModalComponent {
   public isAdmin(): boolean {
     return this.authService.isAdmin();
   }
-
 }

@@ -27,7 +27,6 @@ import { AdminComponent } from './Views/admin/admin.component';
 import { LoginComponent } from './Views/Auth/login/login.component';
 import { RegisterComponent } from './Views/Auth/register/register.component';
 import { ErrorComponent } from './Views/error/error.component';
-import { PopupComponent } from './Components/popup/popup.component';
 import { ModalComponent } from './Components/modal/modal.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ComplaintComponent } from './Views/complaint/complaint.component';
@@ -50,7 +49,6 @@ import { LoadingInterceptor } from './Interceptors/loading.interceptor';
     LoginComponent,
     RegisterComponent,
     ErrorComponent,
-    PopupComponent,
     ModalComponent,
     ComplaintComponent,
     SpinnerComponent,

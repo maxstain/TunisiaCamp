@@ -25,19 +25,19 @@ export class TopicComponent implements OnInit {
   public category!: string;
   public title!: string;
   public description!: string;
-  public isClickedLike :boolean=false;
-  public isClickedDisLike :boolean=false;
-  public idUsersLikes: number[]=[];
-  public idUsersDisLikes: number[]=[];
-  public forumList: number[]=[];
-  public isClickedLikeComment :boolean=false;
-  public isClickedDisLikeComment :boolean=false;
-  public idUsersLikesComment: number[]=[];
-  public idUsersDisLikesComment: number[]=[];
-  public isChangeForum=false;
-  public ischangeComment=false;
-  public feedback!:Comment;
-  
+  public isClickedLike: boolean = false;
+  public isClickedDisLike: boolean = false;
+  public idUsersLikes: number[] = [];
+  public idUsersDisLikes: number[] = [];
+  public forumList: number[] = [];
+  public isClickedLikeComment: boolean = false;
+  public isClickedDisLikeComment: boolean = false;
+  public idUsersLikesComment: number[] = [];
+  public idUsersDisLikesComment: number[] = [];
+  public isChangeForum = false;
+  public ischangeComment = false;
+  public feedback!: Comment;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
@@ -65,72 +65,78 @@ export class TopicComponent implements OnInit {
     // Checking if the isclicked state exists in localStorage
     if (isClickedLikeString !== null) {
       const isClickedLike = JSON.parse(isClickedLikeString);
-  }
-   // Retrieving the isclicked state from localStorage
-   const isClickedDisLikeString = localStorage.getItem('isClickedDisLike');
-
-   // Checking if the isclicked state exists in localStorage
-   if (isClickedDisLikeString !== null) {
-     const isClickedDisLikeLike = JSON.parse(isClickedDisLikeString);
-  
-}
-// Retrieve idUsersLikes and idUsersDisLikes arrays from localStorage
-const idUsersLikesString = localStorage.getItem('idUsersLikes');
-const idUsersDisLikesString = localStorage.getItem('idUsersDisLikes');
-
-// Check if the arrays exist in localStorage and assign them back to component properties
-if (idUsersLikesString) {
-  this.idUsersLikes = JSON.parse(idUsersLikesString);
-}
-
-if (idUsersDisLikesString) {
-  this.idUsersDisLikes = JSON.parse(idUsersDisLikesString);
-  }
-     // Retrieving the isclicked state from localStorage
-     const isClickedLikeCommentString = localStorage.getItem('isClickedLikeComment');
-
-     // Checking if the isclicked state exists in localStorage
-     if (isClickedLikeCommentString !== null) {
-       const isClickedLikeComment = JSON.parse(isClickedLikeCommentString);
-   }
+    }
     // Retrieving the isclicked state from localStorage
-    const isClickedDisLikeCommentString = localStorage.getItem('isClickedDisLikeComment');
- 
+    const isClickedDisLikeString = localStorage.getItem('isClickedDisLike');
+
+    // Checking if the isclicked state exists in localStorage
+    if (isClickedDisLikeString !== null) {
+      const isClickedDisLikeLike = JSON.parse(isClickedDisLikeString);
+    }
+    // Retrieve idUsersLikes and idUsersDisLikes arrays from localStorage
+    const idUsersLikesString = localStorage.getItem('idUsersLikes');
+    const idUsersDisLikesString = localStorage.getItem('idUsersDisLikes');
+
+    // Check if the arrays exist in localStorage and assign them back to component properties
+    if (idUsersLikesString) {
+      this.idUsersLikes = JSON.parse(idUsersLikesString);
+    }
+
+    if (idUsersDisLikesString) {
+      this.idUsersDisLikes = JSON.parse(idUsersDisLikesString);
+    }
+    // Retrieving the isclicked state from localStorage
+    const isClickedLikeCommentString = localStorage.getItem(
+      'isClickedLikeComment'
+    );
+
+    // Checking if the isclicked state exists in localStorage
+    if (isClickedLikeCommentString !== null) {
+      const isClickedLikeComment = JSON.parse(isClickedLikeCommentString);
+    }
+    // Retrieving the isclicked state from localStorage
+    const isClickedDisLikeCommentString = localStorage.getItem(
+      'isClickedDisLikeComment'
+    );
+
     // Checking if the isclicked state exists in localStorage
     if (isClickedDisLikeCommentString !== null) {
       const isClickedDisLikeComment = JSON.parse(isClickedDisLikeCommentString);
-   
- }
+    }
 
- //commmentairess part
- // Retrieve idUsersLikes and idUsersDisLikes arrays from localStorage
- const idUsersLikesCommentString = localStorage.getItem('idUsersLikesComment');
- const idUsersDisLikesCommentString = localStorage.getItem('idUsersDisLikesComment');
- 
- // Check if the arrays exist in localStorage and assign them back to component properties
- if (idUsersLikesCommentString) {
-   this.idUsersLikesComment = JSON.parse(idUsersLikesCommentString);
- }
- 
- if (idUsersDisLikesCommentString) {
-   this.idUsersDisLikesComment = JSON.parse(idUsersDisLikesCommentString);
-   }
- // Retrieving the isclicked state from localStorage
- const ischangeCommentString = localStorage.getItem('isChangeComment');
- 
- // Checking if the isclicked state exists in localStorage
- if (ischangeCommentString !== null) {
-   const isChangeComment = JSON.parse(ischangeCommentString);
-  }
+    //commmentairess part
+    // Retrieve idUsersLikes and idUsersDisLikes arrays from localStorage
+    const idUsersLikesCommentString = localStorage.getItem(
+      'idUsersLikesComment'
+    );
+    const idUsersDisLikesCommentString = localStorage.getItem(
+      'idUsersDisLikesComment'
+    );
 
-   // Retrieving the isclicked state from localStorage
- const ischangeForumString = localStorage.getItem('isChangeForum');
- 
- // Checking if the isclicked state exists in localStorage
- if (ischangeForumString !== null) {
-   const isChangeForum = JSON.parse(ischangeForumString);
+    // Check if the arrays exist in localStorage and assign them back to component properties
+    if (idUsersLikesCommentString) {
+      this.idUsersLikesComment = JSON.parse(idUsersLikesCommentString);
+    }
+
+    if (idUsersDisLikesCommentString) {
+      this.idUsersDisLikesComment = JSON.parse(idUsersDisLikesCommentString);
+    }
+    // Retrieving the isclicked state from localStorage
+    const ischangeCommentString = localStorage.getItem('isChangeComment');
+
+    // Checking if the isclicked state exists in localStorage
+    if (ischangeCommentString !== null) {
+      const isChangeComment = JSON.parse(ischangeCommentString);
+    }
+
+    // Retrieving the isclicked state from localStorage
+    const ischangeForumString = localStorage.getItem('isChangeForum');
+
+    // Checking if the isclicked state exists in localStorage
+    if (ischangeForumString !== null) {
+      const isChangeForum = JSON.parse(ischangeForumString);
+    }
   }
-}
   ngOnDestroy() {
     if (this.sub) this.sub.unsubscribe();
   }
@@ -155,17 +161,18 @@ if (idUsersDisLikesString) {
       this.forum.getStatus(),
       this.category ? this.category : this.forum.getCategory(),
       this.forum.getFeedbacks(),
-      this.forum.getComplaints()
+      this.forum.getComplaints(),
+      this.forum.getCamping()
     );
     this.forumService.updateForumOnServer(newForum);
     this.forumService.refreshPage();
   }
 
-  public editCommentInServer( ){
+  public editCommentInServer() {
     let newComment = new Comment(
       this.feedback.getId(),
       this.comment,
-     this.feedback.getSentiment(),
+      this.feedback.getSentiment(),
       1,
       Number(this.forum.getId()),
       new Date(this.feedback.getCreatedAt()),
@@ -173,8 +180,8 @@ if (idUsersDisLikesString) {
       this.feedback.getLikes(),
       this.feedback.getDisLikes()
     );
-    
-    this.forumService.updateCommentOnServer(this.forum,newComment);
+
+    this.forumService.updateCommentOnServer(this.forum, newComment);
     // this.forumService.refreshPage();
   }
 
@@ -195,7 +202,7 @@ if (idUsersDisLikesString) {
   public getForum() {
     return this.forum;
   }
-  public getCategory(){
+  public getCategory() {
     return this.forum.getCategory();
   }
   public getForumId() {
@@ -208,7 +215,7 @@ if (idUsersDisLikesString) {
     if (!comment) {
       return;
     }
-    const maxIDcomment= Math.max(...this.comments.map(item => item.getId()));
+    const maxIDcomment = Math.max(...this.comments.map((item) => item.getId()));
     this.forumService.getFeedbacksCountFromServer().then((id) => {
       this.commentsCount = id;
     });
@@ -225,7 +232,7 @@ if (idUsersDisLikesString) {
     );
     // this.forumService.addCommentToServer(this.forum, newComment);
     this.forumService.addCommentToForumOnServer(this.forum, newComment);
-    this.feedback=newComment;
+    this.feedback = newComment;
     this.comment = '';
   }
 
@@ -234,42 +241,49 @@ if (idUsersDisLikesString) {
   }
 
   public deleteComment(comment: Comment) {
-    this.feedback=comment;
-   if (this.user.getId()==this.feedback.getAuthorId()){
-    this.forumService.deleteCommentFromServer(this.forum, comment).then(() => {
-      this.snackbar.open('Comment deleted', 'Close', {
-        horizontalPosition: 'center',
-        verticalPosition: 'top',
-        duration: 3000,
-      });
-    });
+    this.feedback = comment;
+    if (this.user.getId() == this.feedback.getAuthorId()) {
+      this.forumService
+        .deleteCommentFromServer(this.forum, comment)
+        .then(() => {
+          this.snackbar.open('Comment deleted', 'Close', {
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+            duration: 3000,
+          });
+        });
+    }
   }
-  }
-  
 
   public like() {
     //  localStorage.clear();
-      if (!this.idUsersLikes.includes(this.user.getId()) ){
-        // this.forumService.unDislikeForum(this.forum);
-        this.idUsersDisLikes = this.idUsersDisLikes.filter(userId => userId !== this.user.getId());
+    if (!this.idUsersLikes.includes(this.user.getId())) {
+      // this.forumService.unDislikeForum(this.forum);
+      this.idUsersDisLikes = this.idUsersDisLikes.filter(
+        (userId) => userId !== this.user.getId()
+      );
       this.forumService.likeForum(this.forum);
       this.idUsersLikes.push(this.user.getId());
-      this.isClickedDisLike=false;
-      this.isClickedLike=true;
+      this.isClickedDisLike = false;
+      this.isClickedLike = true;
       // Saving the isclicked state to localStorage
       localStorage.setItem('isClickedLike', JSON.stringify(this.isClickedLike));
-      localStorage.setItem('isClickedDisLike', JSON.stringify(this.isClickedDisLike));
+      localStorage.setItem(
+        'isClickedDisLike',
+        JSON.stringify(this.isClickedDisLike)
+      );
       // Save idUsersLikes and idUsersDisLikes arrays to localStorage
       localStorage.setItem('idUsersLikes', JSON.stringify(this.idUsersLikes));
-      localStorage.setItem('idUsersDisLikes', JSON.stringify(this.idUsersDisLikes));
+      localStorage.setItem(
+        'idUsersDisLikes',
+        JSON.stringify(this.idUsersDisLikes)
+      );
 
-      console.log(this.idUsersDisLikes)
-      console.log(this.idUsersLikes)
+      console.log(this.idUsersDisLikes);
+      console.log(this.idUsersLikes);
       // Log the contents of localStorage
-
     }
 
-    
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
       const value = localStorage.getItem(String(key));
@@ -277,84 +291,110 @@ if (idUsersDisLikesString) {
     }
   }
   public dislike() {
-    
-      if (!this.idUsersDisLikes.includes(this.user.getId())){
-          this.idUsersLikes = this.idUsersLikes.filter(userId => userId !== this.user.getId());
-   this.forumService.dislikeForum(this.forum);
-   this.idUsersDisLikes.push(this.user.getId());
-   this.isClickedDisLike=true;
-   this.isClickedLike=false;
-   // Saving the isclicked state to localStorage
-   localStorage.setItem('isClickedLike', JSON.stringify(this.isClickedLike));
-   localStorage.setItem('isClickedDisLike', JSON.stringify(this.isClickedDisLike));
-   // Save idUsersLikes and idUsersDisLikes arrays to localStorage
-   localStorage.setItem('idUsersLikes', JSON.stringify(this.idUsersLikes));
-   localStorage.setItem('idUsersDisLikes', JSON.stringify(this.idUsersDisLikes));
-
-      }
-      for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        const value = localStorage.getItem(String(key));
-        console.log(`${key}: ${value}`);
-      }
-}
-public likeComment(comment:Comment) {
-  //  localStorage.clear();
-    if (!this.idUsersLikesComment.includes(this.user.getId()) ){
-      // this.forumService.unDislikeForum(this.forum);
-      this.idUsersDisLikesComment = this.idUsersDisLikesComment.filter(userId => userId !== this.user.getId());
-    this.forumService.likeComment(comment);
-    this.idUsersLikesComment.push(this.user.getId());
-    this.isClickedDisLikeComment=false;
-    this.isClickedLikeComment=true;
-    // Saving the isclicked state to localStorage
-    localStorage.setItem('isClickedLikeComment', JSON.stringify(this.isClickedLikeComment));
-    localStorage.setItem('isClickedDisLikeComment', JSON.stringify(this.isClickedDisLikeComment));
-    // Save idUsersLikes and idUsersDisLikes arrays to localStorage
-    localStorage.setItem('idUsersLikesComment', JSON.stringify(this.idUsersLikesComment));
-    localStorage.setItem('idUsersDisLikesComment', JSON.stringify(this.idUsersDisLikesComment));
-
-    console.log(this.idUsersDisLikesComment)
-    console.log(this.idUsersLikesComment)
-    // Log the contents of localStorage
-
-  }
-
-  
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    const value = localStorage.getItem(String(key));
-    console.log(`${key}: ${value}`);
-  }
-}
-  
-
-
-
-public dislikeComment(comment:Comment) {
-  
-    if (!this.idUsersDisLikesComment.includes(this.user.getId())){
-        this.idUsersLikesComment = this.idUsersLikesComment.filter(userId => userId !== this.user.getId());
- this.forumService.DislikeComment(comment);
- this.idUsersDisLikesComment.push(this.user.getId());
- this.isClickedDisLikeComment=true;
- this.isClickedLikeComment=false;
- // Saving the isclicked state to localStorage
- localStorage.setItem('isClickedLikeComment', JSON.stringify(this.isClickedLikeComment));
- localStorage.setItem('isClickedDisLikeComment', JSON.stringify(this.isClickedDisLikeComment)); //
- // Save idUsersLikes and idUsersDisLikes arrays to localStorage
- localStorage.setItem('idUsersLikesComment', JSON.stringify(this.idUsersLikesComment));
- localStorage.setItem('idUsersDisLikesComment', JSON.stringify(this.idUsersDisLikesComment));
-
+    if (!this.idUsersDisLikes.includes(this.user.getId())) {
+      this.idUsersLikes = this.idUsersLikes.filter(
+        (userId) => userId !== this.user.getId()
+      );
+      this.forumService.dislikeForum(this.forum);
+      this.idUsersDisLikes.push(this.user.getId());
+      this.isClickedDisLike = true;
+      this.isClickedLike = false;
+      // Saving the isclicked state to localStorage
+      localStorage.setItem('isClickedLike', JSON.stringify(this.isClickedLike));
+      localStorage.setItem(
+        'isClickedDisLike',
+        JSON.stringify(this.isClickedDisLike)
+      );
+      // Save idUsersLikes and idUsersDisLikes arrays to localStorage
+      localStorage.setItem('idUsersLikes', JSON.stringify(this.idUsersLikes));
+      localStorage.setItem(
+        'idUsersDisLikes',
+        JSON.stringify(this.idUsersDisLikes)
+      );
     }
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
       const value = localStorage.getItem(String(key));
       console.log(`${key}: ${value}`);
     }
-}
-    
-  
+  }
+  public likeComment(comment: Comment) {
+    //  localStorage.clear();
+    if (!this.idUsersLikesComment.includes(this.user.getId())) {
+      // this.forumService.unDislikeForum(this.forum);
+      this.idUsersDisLikesComment = this.idUsersDisLikesComment.filter(
+        (userId) => userId !== this.user.getId()
+      );
+      this.forumService.likeComment(comment);
+      this.idUsersLikesComment.push(this.user.getId());
+      this.isClickedDisLikeComment = false;
+      this.isClickedLikeComment = true;
+      // Saving the isclicked state to localStorage
+      localStorage.setItem(
+        'isClickedLikeComment',
+        JSON.stringify(this.isClickedLikeComment)
+      );
+      localStorage.setItem(
+        'isClickedDisLikeComment',
+        JSON.stringify(this.isClickedDisLikeComment)
+      );
+      // Save idUsersLikes and idUsersDisLikes arrays to localStorage
+      localStorage.setItem(
+        'idUsersLikesComment',
+        JSON.stringify(this.idUsersLikesComment)
+      );
+      localStorage.setItem(
+        'idUsersDisLikesComment',
+        JSON.stringify(this.idUsersDisLikesComment)
+      );
+
+      console.log(this.idUsersDisLikesComment);
+      console.log(this.idUsersLikesComment);
+      // Log the contents of localStorage
+    }
+
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      const value = localStorage.getItem(String(key));
+      console.log(`${key}: ${value}`);
+    }
+  }
+
+  public dislikeComment(comment: Comment) {
+    if (!this.idUsersDisLikesComment.includes(this.user.getId())) {
+      this.idUsersLikesComment = this.idUsersLikesComment.filter(
+        (userId) => userId !== this.user.getId()
+      );
+      this.forumService.DislikeComment(comment);
+      this.idUsersDisLikesComment.push(this.user.getId());
+      this.isClickedDisLikeComment = true;
+      this.isClickedLikeComment = false;
+      // Saving the isclicked state to localStorage
+      localStorage.setItem(
+        'isClickedLikeComment',
+        JSON.stringify(this.isClickedLikeComment)
+      );
+      localStorage.setItem(
+        'isClickedDisLikeComment',
+        JSON.stringify(this.isClickedDisLikeComment)
+      ); //
+      // Save idUsersLikes and idUsersDisLikes arrays to localStorage
+      localStorage.setItem(
+        'idUsersLikesComment',
+        JSON.stringify(this.idUsersLikesComment)
+      );
+      localStorage.setItem(
+        'idUsersDisLikesComment',
+        JSON.stringify(this.idUsersDisLikesComment)
+      );
+    }
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      const value = localStorage.getItem(String(key));
+      console.log(`${key}: ${value}`);
+    }
+  }
+
   // public unLike() {
   //   this.forumService.unLikeForum(this.forum);
   // }
@@ -371,30 +411,34 @@ public dislikeComment(comment:Comment) {
     this.category = category.value;
     console.log('selected', this.category);
   }
-  
+
   public isAdmin(): boolean {
     return this.authService.isAdmin();
   }
 
-  public changeComment(feedback:Comment){
-    console.log(this.user.getId())
+  public changeComment(feedback: Comment) {
+    console.log(this.user.getId());
 
-    this.feedback=feedback;
-    console.log("hello",this.feedback.getAuthorId())
-    console.log()
-    if (this.user.getId()==this.feedback.getAuthorId()){
-      this.ischangeComment=true;
+    this.feedback = feedback;
+    console.log('hello', this.feedback.getAuthorId());
+    console.log();
+    if (this.user.getId() == this.feedback.getAuthorId()) {
+      this.ischangeComment = true;
     }
-    this.isChangeForum=false;
-    localStorage.setItem('ischangeComment', JSON.stringify(this.ischangeComment));
+    this.isChangeForum = false;
+    localStorage.setItem(
+      'ischangeComment',
+      JSON.stringify(this.ischangeComment)
+    );
     localStorage.setItem('isChangeForum', JSON.stringify(this.isChangeForum));
-  
-    
   }
-  public changeForum(){
-    this.ischangeComment=false;
-    this.isChangeForum=true;
-    localStorage.setItem('ischangeComment', JSON.stringify(this.ischangeComment));
+  public changeForum() {
+    this.ischangeComment = false;
+    this.isChangeForum = true;
+    localStorage.setItem(
+      'ischangeComment',
+      JSON.stringify(this.ischangeComment)
+    );
     localStorage.setItem('isChangeForum', JSON.stringify(this.isChangeForum));
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
@@ -402,11 +446,5 @@ public dislikeComment(comment:Comment) {
       console.log(`${key}: ${value}`);
     }
     return this.forum;
-   
   }
-
-
-   
- 
-  
 }

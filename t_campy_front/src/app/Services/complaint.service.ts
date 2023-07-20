@@ -10,6 +10,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class ComplaintService {
   public complaints!: Complaint[];
   public complaint!: Complaint;
+
+  // This is just for testing static data
   public StaticComplaints: Complaint[] = [
     new Complaint(
       1,
@@ -33,13 +35,14 @@ export class ComplaintService {
     this.fetchComplaintsFromServer().then(
       (complaints) => (this.complaints = complaints ? complaints : [])
     );
-    // this.getComplaints();
   }
 
+  // Just for testing static data
   public getComplaints(): Complaint[] {
     return this.StaticComplaints;
   }
 
+  // Just for testing static data
   public addComplaint(complaint: Complaint): void {
     this.StaticComplaints.push(complaint);
   }
@@ -52,6 +55,7 @@ export class ComplaintService {
         )
         .toPromise()
         .then((complaints: any) => {
+          // This line converts the json data to a list of Complaints
           return complaints.map((complaint: any) => {
             return Complaint.fromJson(complaint);
           });

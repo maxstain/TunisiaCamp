@@ -2,7 +2,7 @@ import { Camping } from '../Camping/camping';
 import { Complaint } from '../Complaint/complaint';
 import { Comment } from '../comment/comment.model';
 export class Forum {
-   id!: number;
+  id!: number;
   private title: string;
   private description: string;
   private date: Date;
@@ -14,7 +14,7 @@ export class Forum {
   private category: string;
   private feedbacks: Comment[];
   private complaints: Complaint[];
-  private camping: any = {};
+  private camping: Camping;
 
   constructor(
     id: number,
@@ -28,7 +28,8 @@ export class Forum {
     Status: string,
     category: string,
     feedbacks: Comment[],
-    complaints: Complaint[]
+    complaints: Complaint[],
+    camping: Camping
   ) {
     this.id = id;
     this.title = title;
@@ -42,6 +43,7 @@ export class Forum {
     this.category = category;
     this.feedbacks = feedbacks;
     this.complaints = complaints;
+    this.camping = camping;
   }
 
   public static fromJson(json: any): Forum {
@@ -60,7 +62,8 @@ export class Forum {
       json.status,
       json.category,
       Comment.fromJsonArray(json.feedbacks),
-      Complaint.fromJsonArray(json.complaints)
+      Complaint.fromJsonArray(json.complaints),
+      Camping.fromJson(json.camping)
     );
   }
 
@@ -86,7 +89,7 @@ export class Forum {
       category: this.category,
       feedbacks: this.feedbacks.map((f) => f.toJson()),
       complaints: this.complaints.map((c) => c.toJson()),
-      camping: this.camping,
+      camping: this.camping.toJson(),
     };
   }
 
@@ -200,18 +203,36 @@ export class Forum {
   public setCreationDate(date: Date) {
     this.date = date;
   }
-  public setLikes(like:number) {
-    this.likes=like;
+  public setLikes(like: number) {
+    this.likes = like;
   }
-  public setDisLikes(dislike:number) {
-    this.dislikes=dislike;
+  public setDisLikes(dislike: number) {
+    this.dislikes = dislike;
   }
   public getComplaints(): Complaint[] {
     return this.complaints;
   }
 
+  public getCamping(): Camping {
+    return this.camping;
+  }
+
   public static empty(): Forum {
-    return new Forum(0, '', '', new Date(), '', '', 0, 0, '', '', [], []);
+    return new Forum(
+      0,
+      '',
+      '',
+      new Date(),
+      '',
+      '',
+      0,
+      0,
+      '',
+      '',
+      [],
+      [],
+      Camping.empty()
+    );
   }
 
   public tagsToArray(): string[] {
