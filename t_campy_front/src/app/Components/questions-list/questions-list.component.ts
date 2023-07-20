@@ -2,6 +2,7 @@ import { Component, Injector } from '@angular/core';
 import { Forum } from '../../Models/forum/forum.model';
 import { ForumService } from 'src/app/Services/forum.service';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
+import { AuthService } from 'src/app/Services/auth.service';
 
 @Component({
   selector: 'app-questions-list',
@@ -16,7 +17,7 @@ export class QuestionsListComponent {
   forums!: Forum[];
   Status: string = 'all';
 
-  constructor(private forumService: ForumService) {}
+  constructor(private forumService: ForumService,private authService:AuthService) {}
 
   ngOnInit(): void {
     this.forumService.countOpenedForums().then((number) => {
@@ -34,25 +35,38 @@ export class QuestionsListComponent {
     this.forumService.fetchForumsFromServer().then((Forums) => {
       this.forums = Forums;
     });
+    
   }
 
   sort($event: any) {
     this.Status = $event.value;
     if (this.Status === 'recent') {
-      this.forumService.getRecentForums().then((Forums) => {
-        return (Forums as Forum[]) ? Forums : [];
-      });
+         this.forums.sort((a, b) => {
+          return (
+            new Date(b.getCreationDate()).getTime() -
+            new Date(a.getCreationDate()).getTime()
+          );
+          
+        });
+        
+      
     } else if (this.Status === 'popular') {
-      this.forumService.getPopularForums().then((Forums) => {
-        return (Forums as Forum[]) ? Forums : [];
+      
+        this.forums.sort((a, b) => {
+        return b.getLikes() - a.getLikes();
       });
+    
     } else if (this.Status === 'unanswered') {
-      this.forumService.getUnansweredForums().then((Forums) => {
-        return (Forums as Forum[]) ? Forums : [];
+      this.forumService.fetchForumsFromServer().then((forums) => {
+        this.forums = forums;
       });
+       this.forums.filter(
+        (forum) => forum.getFeedbacks().length === 0
+      );
+       
     } else {
-      this.forumService.fetchForumsFromServer().then((Forums) => {
-        return (Forums as Forum[]) ? Forums : [];
+      this.forumService.fetchForumsFromServer().then((forums) => {
+        return (forums as Forum[]) ? forums : [];
       });
     }
   }
@@ -79,5 +93,8 @@ export class QuestionsListComponent {
 
   get ForumsList(): Forum[] {
     return this.forums ? this.forums : [];
+  }
+  public isAdmin(): boolean {
+    return this.authService.isAdmin();
   }
 }

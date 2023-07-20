@@ -1,0 +1,55 @@
+<form #f="ngForm" (ngSubmit)="saveOffre()" >
+  <div class="form-group">
+    <label for="titre" class="form-label mt-2">Titre</label>
+    <input type="text" class="form-control" name="titre" [(ngModel)]="offre.titre" required minlength="3" #title="ngModel">
+    <div *ngIf="title.invalid  && title.touched">
+      <div  *ngIf="title.errors?.['required']" >
+        title is required.
+      </div>
+      <div *ngIf="title.errors?.['minlength']"  >
+        title must be atleast 3 characters
+      </div>
+   </div>
+  </div>
+  <div class="form-group">
+    <label for="description" class="form-label mt-2">Description</label>
+    <input type="text" class="form-control" name="description" [(ngModel)]="offre.description" required minlength="3" #description="ngModel">
+    <div *ngIf="description.invalid  && description.touched">
+      <div  *ngIf="description.errors?.['required']" >
+        description is required.
+      </div>
+      <div *ngIf="description.errors?.['minlength']"  >
+        description must be atleast 3 characters
+      </div>
+   </div>
+  </div>
+  <div class="form-group">
+    <label for="nombre" class="form-label mt-2">Nombre manquant</label>
+    <input type="text" class="form-control" name="nombre" [(ngModel)]="offre.nombreTotal" required  #nombreManquant="ngModel">
+    <div *ngIf="nombreManquant.invalid  && nombreManquant.touched">
+      <div  *ngIf="nombreManquant.errors?.['required']" >
+        title is required.
+      </div>
+      <!-- <div *ngIf="nombreManquant.errors?.['minlength']"  >
+        title must be atleast 3 characters
+      </div> -->
+   </div>
+  </div>
+  <!-- <div class="form-group">
+    <label for="activities" class="form-label mt-2">Activities</label>
+    <input type="text" class="form-control" name="activities" [(ngModel)]="group.activities" required minlength="3" #activities="ngModel">
+    <div *ngIf="activities.invalid  && activities.touched">
+      <div  *ngIf="activities.errors?.['required']" >
+        title is required.
+      </div>
+      <div *ngIf="activities.errors?.['minlength']"  >
+        title must be atleast 3 characters
+      </div>
+   </div>
+  </div> -->
+
+
+
+  <button type="submit" class="btn btn-primary mt-2" value="submit" [disabled]="f.invalid">Add</button>
+</form>
+

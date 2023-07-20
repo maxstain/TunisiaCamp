@@ -1,0 +1,25 @@
+<div class="container mt-4 ">
+  <div class="row ">
+  <div class="col-md-4 col-sm-2 col-12" *ngFor="let g of listOffre">
+  <div  class="card" style="width: 18rem;">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXpUFaxknHgA81Qi0996icKtUwGpMpkuqlIqdp7SZMWwy7pLOYqpL_K5PDN5G8NYCvzvY&usqp=CAU" class="card-img-top" alt="...">
+
+    <div class="card-body">
+      <h5 class="card-title">title : {{g.titre}}</h5>
+      <p class="card-text">Description : {{g.description}}</p>
+      <p class="card-text">Total number : {{g.nombreTotal}}</p>
+      <button (click)="deleteOffre(g.id)" class="btn btn-danger" style="margin-left: 20pt">Delete</button>
+      <button (click)="updateOffre(g.id)" class="btn btn-info" style="margin-left: 40pt">Update</button>
+      <!-- <button (click)="offreDetails(g.id)" class="btn btn-info" style="margin-left: 10px">Details</button> -->
+
+      <!-- <button  class="btn btn-primary" (click)="buy(product)" [disabled]="product.quantity==0" style="width: 40pt; ">Buy</button>
+      <button  class="btn btn-success ml-2" (click)="like(product)" style="width: 60pt; margin-left: 10pt;">Like</button>
+      <button  class="btn btn-danger ml-2" style="width: 60pt; margin-left: 10pt;" (click)="dislike(product)" [disabled]="product.like<=0" >Dislike</button>
+      <button  class="btn btn-danger ml-2" style="width: 60pt; margin-left: 10pt;" [routerLink]="['/product',product.id]" >Details</button>
+      <button  class="btn btn-primary" (click)="deleteProduct(product)"  style="width: 40pt; ">Delete</button> -->
+
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>

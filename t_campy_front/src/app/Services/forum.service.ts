@@ -196,7 +196,7 @@ export class ForumService {
     }
   }
 
-  public async getForumById(id: string): Promise<Forum> {
+  public async getForumById(id: number): Promise<Forum> {
     return (await this.forums).find((t) => t.getId() === id)! ?? Forum.empty();
   }
 
@@ -235,10 +235,7 @@ export class ForumService {
     try {
       await this.http
         .put<Forum>(
-          'http://localhost:8089/Feedback/update-Feedback/' +
-            Forum.getId() +
-            '/' +
-            comment.getId(),
+          'http://localhost:8089/Feedback/update-Feedback/' +comment.getId(),
           comment.toJson()
         )
         .subscribe(async (Forum: any) => {
@@ -269,43 +266,108 @@ export class ForumService {
     return this.Categories;
   }
 
-  public async unLikeForum(Forum: Forum) {
-    Forum.unLike();
-    await this.http.put<Forum>(
-      'http://localhost:8089/forum/unlike-forum/' + Forum.getId(),
-      Forum.toJson()
-    );
-    this.refreshPage();
-  }
+  
 
-  public async unDislikeForum(Forum: Forum) {
-    Forum.unDislike();
-    await this.http.put<Forum>(
-      'http://localhost:8089/forum/undislike-forum/' + Forum.getId(),
-      Forum.toJson()
-    );
-    this.refreshPage();
-  }
 
   public async getClosedForums(): Promise<Forum[]> {
     return (await this.forums).filter((forum) => !forum.isOpened()) ?? [];
   }
 
-  public async likeForum(forum: Forum) {
-    forum.like();
-    await this.http.put<Forum>(
-      'http://localhost:8089/forum/add-like-Forum/' + forum.getId(),
-      forum.toJson()
-    );
+  // public async likeForum(forum: Forum) {
+  //   forum.like();
+  //   await this.http.put<Forum>(
+  //     'http://localhost:8089/forum/add-like-Forum/' + forum.getId(),
+  //     forum.toJson()
+  //   );
+  //   this.refreshPage();
+  // }
+ 
+ 
+  
+  
+  public  likeForum(forum: Forum) {
+    try {
+       this.http
+        .put(
+          'http://localhost:8089/forum/add-like-Forum/' + forum.getId(),
+          forum.toJson()
+        )
+        .subscribe((data) => {
+          this.fetchForumsFromServer();
+          
+        });
+    } catch (error) {
+      console.log(error);
+      this.snackbar.open('Error while adding likes', 'Close', {
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        duration: 3000,
+      });
+    }
     this.refreshPage();
   }
 
-  public async dislikeForum(forum: Forum) {
-    forum.dislike();
-    await this.http.put<Forum>(
-      'http://localhost:8089/forum/add-dislike-Forum/' + forum.getId(),
-      forum.toJson()
-    );
+  public  dislikeForum(forum: Forum) {
+    try {
+       this.http
+        .put(
+          'http://localhost:8089/forum/add-dislike-Forum/' + forum.getId(),
+          forum.toJson()
+        )
+        .subscribe((data) => {
+          this.fetchForumsFromServer();
+        });
+    } catch (error) {
+      console.log(error);
+      this.snackbar.open('Error while adding dislikes', 'Close', {
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        duration: 3000,
+      });
+    }
+    this.refreshPage();
+  }
+  public  likeComment(feedback: Comment) {
+    try {
+       this.http
+        .put(
+          'http://localhost:8089/Feedback/add-like-Feedback/' + feedback.getId(),
+          feedback.toJson()
+        )
+        .subscribe((data) => {
+          this.fetchForumsFromServer();
+          
+        });
+    } catch (error) {
+      console.log(error);
+      this.snackbar.open('Error while adding likes', 'Close', {
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        duration: 3000,
+      });
+    }
+    this.refreshPage();
+  }
+
+  public  DislikeComment(feedback: Comment) {
+    try {
+       this.http
+        .put(
+          'http://localhost:8089/Feedback/add-dislike-Feedback/' + feedback.getId(),
+          feedback.toJson()
+        )
+        .subscribe((data) => {
+          this.fetchForumsFromServer();
+          
+        });
+    } catch (error) {
+      console.log(error);
+      this.snackbar.open('Error while adding likes', 'Close', {
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        duration: 3000,
+      });
+    }
     this.refreshPage();
   }
 
@@ -352,7 +414,7 @@ export class ForumService {
   }
 
   public async getRecentForums(): Promise<Forum[]> {
-    return (await this.forums).sort((a, b) => {
+    return  this.forums.sort((a, b) => {
       return (
         new Date(b.getCreationDate()).getTime() -
         new Date(a.getCreationDate()).getTime()
@@ -361,7 +423,7 @@ export class ForumService {
   }
 
   public async getPopularForums(): Promise<Forum[]> {
-    return (await this.forums).sort((a, b) => {
+    return this.forums.sort((a, b) => {
       return b.getLikes() - a.getLikes();
     });
   }

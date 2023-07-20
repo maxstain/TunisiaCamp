@@ -23,14 +23,19 @@
         <mat-button-toggle value="recent" class="btn btn-light p-0"
           >recent</mat-button-toggle
         >
-        <mat-button-toggle value="unanswered" class="btn btn-light p-0"
+        <!-- <mat-button-toggle value="unanswered" class="btn btn-light p-0"
           >unanswered</mat-button-toggle
-        >
+        > -->
       </mat-button-toggle-group>
     </div>
   </div>
-  <div *ngIf="forums.length != 0">
+  <div *ngIf="forums.length != 0 ">
+    
     <mat-expansion-panel *ngFor="let forum of forums" class="card">
+      
+      <div *ngIf="Status=='unanswered' && forum.getFeedbacks.length==0">
+
+      </div>
       <mat-expansion-panel-header class="p-3">
         <mat-panel-title class="fw-bold">
           {{ forum.getTitle() }}
@@ -42,15 +47,17 @@
 
       <app-chat-card [forum]="forum"></app-chat-card>
       <mat-action-row class="card-footer">
+        
         <a
-          [routerLink]="['/forums', forum.getId()]"
+          [routerLink]="['/forums', forum.id]"
           mat-raised-button
           class="btn btn-custom-blue-filled mx-1 fw-bold w-75"
         >
           <i class="bi bi-chat-left-text-fill"></i>
           Feedback
         </a>
-        <button
+        <button *ngIf="!isAdmin()"
+ 
           mat-raised-button
           data-bs-toggle="modal"
           data-bs-target="#complaintModal"
@@ -59,6 +66,15 @@
           <i class="bi bi-flag-fill"></i>
           Complaints
         </button>
+        <button *ngIf="isAdmin()"
+        [routerLink]="['/admin']"
+        mat-raised-button
+        data-bs-toggle="modal"
+        class="btn btn-danger mx-1 fw-bold w-25"
+      >
+        <i class="bi bi-flag-fill"></i>
+        Complaints
+      </button>
       </mat-action-row>
     </mat-expansion-panel>
   </div>

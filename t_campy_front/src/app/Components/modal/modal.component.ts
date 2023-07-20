@@ -46,8 +46,12 @@ export class ModalComponent {
       });
       return;
     }
+    
+  const maxID = Math.max(...this.forums.map(item => item.id));
+
+ 
     this.forum = new Forum(
-      (this.forums.length + 1).toString(),
+      (maxID + 1),
       this.title,
       this.description,
       new Date(),
@@ -60,6 +64,7 @@ export class ModalComponent {
       [],
       []
     );
+    
     try {
       this.forumService.addForumToServer(this.forum); // add Forum to server
       this.snackBar.open('Forum added', 'Close', {
@@ -81,7 +86,7 @@ export class ModalComponent {
       window.location.reload();
     });
   }
-
+  
   public addComplaint(): void {
     if (!this.title || !this.description) {
       this.snackBar.open('Please fill all the fields', 'Close', {
@@ -91,8 +96,9 @@ export class ModalComponent {
       });
       return;
     }
+    const maxIDcomplaint = Math.max(...this.forums.map(item => item.id));
     this.complaint = new Complaint(
-      this.complaintService.getComplaints().length + 1,
+      maxIDcomplaint+ 1,
       this.title,
       this.description,
       new Date(),
@@ -129,4 +135,8 @@ export class ModalComponent {
     this.category = category.value;
     console.log('selected', this.category);
   }
+  public isAdmin(): boolean {
+    return this.authService.isAdmin();
+  }
+
 }

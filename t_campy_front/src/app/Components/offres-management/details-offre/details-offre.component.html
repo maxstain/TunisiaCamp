@@ -1,0 +1,19 @@
+<h2>Offre Details</h2>
+
+<hr/>
+<div *ngIf="offre">
+  <div>
+    <label><b>Titre de l'offre: </b></label> {{offre.titre}}
+  </div>
+  <div>
+    <label><b>Titre de l'offre: </b></label> {{offre.description}}
+  </div>
+  <div>
+    <label><b>Titre de l'offre: </b></label> {{offre.nombreTotal}}
+  </div>
+
+</div>
+
+<br>
+<br>
+<button (click)="list()" class="btn btn-primary">Back to Group List</button><br>
