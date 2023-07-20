@@ -28,9 +28,9 @@ public class OffreController {
     public void deleteOffre(@PathVariable(name = "OffreId") Long OffreId){
         offreService.deleteOffre(OffreId);
     }
-    @PutMapping("/updateOffre/{OffreId}")
-    public Offre updateOffre(Offre Offre,@PathVariable(name = "OffreId") Long OffreId){
-        return offreService.updateOffre(Offre,OffreId);
+    @PutMapping("/updateOffre")
+    public Offre updateOffre(@RequestBody Offre Offre){
+        return offreService.updateOffre(Offre);
     }
     @GetMapping("/getOffreById/{idOffre}")
     public Offre getOffreById(@PathVariable(name = "idOffre") Long idOffre){

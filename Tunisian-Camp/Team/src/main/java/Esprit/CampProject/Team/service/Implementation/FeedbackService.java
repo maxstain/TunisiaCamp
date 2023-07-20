@@ -17,7 +17,7 @@ public interface FeedbackService {
 
     Feedback retrieveFeedback (Long idFeedback);
 
-    void deleteFeedback(Long idFeedback);
+    void  deleteFeedback(Long idForum,Long idFeedback);
     Long addLikesFeedback(Long idFeedback);
     Long addDisLikesFeedback(Long idFeedback);
 

@@ -83,15 +83,37 @@ public class ForumServiceImpl implements ForumService {
     public Long addLikesForum(Long idForm) {
         Forum forum = forumRepository.findById(idForm).get();
         Long likes = forum.getLikes() + 1;
+        Long dislikes=unDisLikesForum(idForm);
+        forum.setDislikes(dislikes);
         forum.setLikes(likes);
         forumRepository.save(forum);
         return likes;
     }
+    @Override
+    public Long unLikesForum(Long idForm) {
+        Forum forum = forumRepository.findById(idForm).get();
+        Long likes = forum.getLikes();
+        if (likes>=1){
+            likes = likes - 1;
+        }
+        return likes;
+    }
+    @Override
+    public Long unDisLikesForum(Long idForm) {
+        Forum forum = forumRepository.findById(idForm).get();
+        Long dislikes = forum.getDislikes();
+        if (dislikes>=1) {
+            dislikes = dislikes - 1;
+        }
+        return dislikes;
 
+    }
     @Override
     public Long addDisLikesForum(Long idForm) {
         Forum forum = forumRepository.findById(idForm).get();
         Long dislikes = forum.getDislikes() + 1;
+        Long likes=unLikesForum(idForm);
+        forum.setLikes(likes);
         forum.setDislikes(dislikes);
         forumRepository.save(forum);
         return dislikes;
@@ -128,8 +150,8 @@ public class ForumServiceImpl implements ForumService {
         }
         return null;
     }
-    @Scheduled(cron = "*/30 * * * * *")
-   // @Scheduled(cron = "0 0 * * * *") // Schedule it to run every hour
+    //@Scheduled(cron = "*/30 * * * * *")
+    @Scheduled(cron = "0 0 * * * *") // Schedule it to run every hour
     public void runPythonScript() {
         try {
             // Provide the correct Python interpreter command

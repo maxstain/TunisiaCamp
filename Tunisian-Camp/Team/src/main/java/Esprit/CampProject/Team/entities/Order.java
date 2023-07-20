@@ -11,33 +11,34 @@ import java.util.Set;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "order_id")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "user-id")
-    private String userid;
-
-    @OneToMany(mappedBy = "order")
-
-    private Set<Produit> produits = new HashSet<>();
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "shop_id")
-    private Shop shop;
-
-    public Shop getShop() {
-        return shop;
-    }
-
-    public void setShop(Shop shop) {
-        this.shop = shop;
-    }
-
-    public void Setuserid(String id) {
-        this.userid=id;
-    }
-
-    public Long getId() {
-        return this.id;
-    }
+//    @Column(name = "user-id")
+//    private String userid;
+//
+//    @OneToMany(mappedBy = "order")
+//    @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+//    @JsonIgnoreProperties(value = { "commande", "shop", "activities" }, allowSetters = true)
+//    private Set<Produit> produits = new HashSet<>();
+//
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "shop_id")
+//    private Shop shop;
+//
+//    public Shop getShop() {
+//        return shop;
+//    }
+//
+//    public void setShop(Shop shop) {
+//        this.shop = shop;
+//    }
+//
+//    public void Setuserid(String id) {
+//        this.userid=id;
+//    }
+//
+//    public Long getId() {
+//        return this.id;
+//    }
 }

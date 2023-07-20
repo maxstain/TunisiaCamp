@@ -25,8 +25,11 @@ public class Groupe implements Serializable {
 
     @Column(name = "name")
     private String name;
+//    private String image;
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "groupe")
+
+
+    @OneToMany(cascade = CascadeType.MERGE,mappedBy = "groupe")
     private Set<Activity> activities;
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "groupe")
     private Set<Offre> offres;
@@ -34,5 +37,6 @@ public class Groupe implements Serializable {
     private Set<Reservation> reservations;
     @ManyToOne
     private  Shop shop;
+
 
 }
