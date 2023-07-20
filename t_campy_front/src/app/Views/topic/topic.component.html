@@ -101,7 +101,7 @@
         <p>No comments yet</p>
       </div>
       <div
-        class="align-items-center w-100 p-3 border rounded {{ feedback.getSentiment() == 'POSITIVE' ? 'bg-green-300': 'bg-red-300' }}"
+        class="align-items-center w-100 p-3 border rounded {{ user.isAdmin() ? (feedback.getSentiment() == 'POSITIVE' ? 'bg-green-300': 'bg-red-300') : null }}"
         *ngFor="let feedback of getFeedbacks()">
         <div class="d-flex align-items-center flex-row justify-content-between">
           <div class="d-flex align-items-center justify-content-center">
