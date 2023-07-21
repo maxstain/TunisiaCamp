@@ -39,7 +39,7 @@ export class Comment {
     return this.comment;
   }
   public getSentiment(): string {
-    return this.sentiment;
+    return this.sentiment.toUpperCase();
   }
   public getLikes(): number {
     return this.likes;
