@@ -53,7 +53,7 @@ export class SidebarComponent {
   public getCertainNumberOfTags(number: number): string[] {
     let tags = this.forumService.getAllTags() ?? [];
     let newTags: string[] = [];
-    for (let i = 0; i < number; i++) {
+    for (let i = 0; i < number && i < tags.length; i++) {
       if (tags[i].length > 2) {
         newTags.push(tags[i]);
       }

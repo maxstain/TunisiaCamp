@@ -25,6 +25,11 @@
         # {{ tag }}
       </button>
     </div>
+    <div
+    *ngIf="tags.length == 0"
+    >
+      <p class="text-muted">No tags found</p>
+    </div>
   </div>
   <div *ngIf="isAdmin()">
     <button
