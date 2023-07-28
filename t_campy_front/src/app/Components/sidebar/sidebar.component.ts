@@ -13,18 +13,23 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class SidebarComponent {
   public category: string = 'All';
-  private questionsList!: QuestionsListComponent ;
+  private questionsList!: QuestionsListComponent;
+  public tags: string[] = [];
   constructor(
     private authService: AuthService,
     private router: Router,
     private forumService: ForumService,
-    private snackbar: MatSnackBar,
+    private snackbar: MatSnackBar
   ) {}
 
   ngOnInit() {
     this.forumService.getForums();
-    this.forumService.getTags();
-    this.questionsList = new QuestionsListComponent(this.forumService, this.authService, this.snackbar);
+    this.tags = this.forumService.getTags();
+    this.questionsList = new QuestionsListComponent(
+      this.forumService,
+      this.authService,
+      this.snackbar
+    );
   }
 
   public isAdmin(): boolean {
@@ -46,11 +51,10 @@ export class SidebarComponent {
   }
 
   public getCertainNumberOfTags(number: number): string[] {
-    let tags = this.forumService.getAllTags();
+    let tags = this.forumService.getAllTags() ?? [];
     let newTags: string[] = [];
     for (let i = 0; i < number; i++) {
-      if (tags[i].length > 2)
-      {
+      if (tags[i].length > 2) {
         newTags.push(tags[i]);
       }
     }
@@ -58,7 +62,7 @@ export class SidebarComponent {
   }
 
   public filterForumsByTag(tag: string) {
-    console.log("Tag:", tag);
+    console.log('Tag:', tag);
     if (tag != 'All') {
       this.forumService.filterForumsByTag(tag).then((forums) => {
         this.questionsList.forums = forums;

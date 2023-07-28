@@ -11,10 +11,10 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class ForumService {
-  public forums!: Forum[];
+  public forums: Forum[] = [];
   Forum: Forum = Forum.empty();
-  public tags: string[] = ["All"];
-  public comments!: Comment[];
+  public tags: string[] = ['All'];
+  public comments: Comment[] = [];
 
   public Categories: string[] = [
     'Camping',
@@ -30,15 +30,13 @@ export class ForumService {
     private router: Router,
     private authService: AuthService,
     private snackbar: MatSnackBar
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.fetchForumsFromServer().then(
-      (forums) => {
-        this.forums = forums ? forums : [];
-        this.tags.push(...this.getAllTags());
-      }
-    );
+    this.fetchForumsFromServer().then((forums) => {
+      this.forums = forums ? forums : [];
+      this.tags.push(...this.getAllTags());
+    });
   }
 
   // For robustness, we can use the following method to get an instance of the service:
@@ -312,7 +310,7 @@ export class ForumService {
       this.http
         .put(
           'http://localhost:8089/Feedback/add-like-Feedback/' +
-          feedback.getId(),
+            feedback.getId(),
           feedback.toJson()
         )
         .subscribe((data) => {
@@ -334,7 +332,7 @@ export class ForumService {
       this.http
         .put(
           'http://localhost:8089/Feedback/add-dislike-Feedback/' +
-          feedback.getId(),
+            feedback.getId(),
           feedback.toJson()
         )
         .subscribe((data) => {
@@ -366,9 +364,9 @@ export class ForumService {
       await this.http
         .delete<Forum>(
           'http://localhost:8089/Feedback/delete-Feedback/' +
-          forum.getId() +
-          '/' +
-          comment.getId()
+            forum.getId() +
+            '/' +
+            comment.getId()
         )
         .subscribe(async (forum: any) => {
           (await this.forums)
