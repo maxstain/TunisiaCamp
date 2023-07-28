@@ -2,26 +2,23 @@
   <p class="fs-2 custom-blue">Filters</p>
   <div>
     <p class="fw-bold">Categories</p>
-    <select class="form-select my-2" #categories (change)="selectCategory(categories)" aria-label="Default select example">
-          <option selected>All Categories</option>
-          <option *ngFor="let category of getCategories()" value="{{ category }}">{{ category }}</option>
-        </select>
+    <select class="form-select my-2" #categories (change)="selectCategory(categories)"
+      aria-label="Default select example">
+      <option selected>All Categories</option>
+      <option *ngFor="let category of getCategories()" value="{{ category }}">{{ category }}</option>
+    </select>
   </div>
   <div>
     <p class="fw-bold">Tags #</p>
     <div class="d-flex flex-wrap">
-      <button class="btn btn-light text-start m-1"># General</button>
-      <button class="btn btn-light text-start m-1"># Ideas</button>
-      <button class="btn btn-light text-start m-1"># Camping</button>
-      <button class="btn btn-light text-start m-1"># Offer</button>
+      <button *ngFor="let tag of getCertainNumberOfTags(6)" class="btn btn-light text-start m-1"
+        (click)="filterForumsByTag(tag)">
+        # {{tag}}
+      </button>
     </div>
   </div>
   <div *ngIf="isAdmin()">
-    <button
-      class="btn btn-custom-blue-filled w-100 mx-1 my-4"
-      data-bs-toggle="modal"
-      data-bs-target="#topicModal"
-    >
+    <button class="btn btn-custom-blue-filled w-100 mx-1 my-4" data-bs-toggle="modal" data-bs-target="#topicModal">
       + Add a Topic
     </button>
   </div>

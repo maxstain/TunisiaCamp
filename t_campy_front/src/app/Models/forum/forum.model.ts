@@ -217,6 +217,10 @@ export class Forum {
     return this.camping;
   }
 
+  public getTagsArray(): string[] {
+    return this.tags.split(',');
+  }
+
   public static empty(): Forum {
     return new Forum(
       0,

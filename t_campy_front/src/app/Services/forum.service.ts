@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 export class ForumService {
   public forums!: Forum[];
   Forum: Forum = Forum.empty();
-  public tags!: string[];
+  public tags: string[] = ["All"];
   public comments!: Comment[];
 
   public Categories: string[] = [
@@ -30,14 +30,15 @@ export class ForumService {
     private router: Router,
     private authService: AuthService,
     private snackbar: MatSnackBar
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.fetchForumsFromServer().then(
-      (forums) => (this.forums = forums ? forums : [])
+      (forums) => {
+        this.forums = forums ? forums : [];
+        this.tags.push(...this.getAllTags());
+      }
     );
-    // this.getForums();
-    this.tags = ['Camping', 'Product Reviews', 'Places to Visit'];
   }
 
   // For robustness, we can use the following method to get an instance of the service:
@@ -311,7 +312,7 @@ export class ForumService {
       this.http
         .put(
           'http://localhost:8089/Feedback/add-like-Feedback/' +
-            feedback.getId(),
+          feedback.getId(),
           feedback.toJson()
         )
         .subscribe((data) => {
@@ -333,7 +334,7 @@ export class ForumService {
       this.http
         .put(
           'http://localhost:8089/Feedback/add-dislike-Feedback/' +
-            feedback.getId(),
+          feedback.getId(),
           feedback.toJson()
         )
         .subscribe((data) => {
@@ -365,9 +366,9 @@ export class ForumService {
       await this.http
         .delete<Forum>(
           'http://localhost:8089/Feedback/delete-Feedback/' +
-            forum.getId() +
-            '/' +
-            comment.getId()
+          forum.getId() +
+          '/' +
+          comment.getId()
         )
         .subscribe(async (forum: any) => {
           (await this.forums)
@@ -491,5 +492,19 @@ export class ForumService {
         duration: 3000,
       });
     }
+  }
+
+  public async filterForumsByTag(tag: string): Promise<Forum[]> {
+    return this.fetchForumsFromServer().then((forums) => {
+      return forums.filter((forum) => forum.getTagsArray().includes(tag));
+    });
+  }
+
+  public getAllTags(): string[] {
+    let tags: string[] = [];
+    for (let forum of this.forums) {
+      tags = tags.concat(forum.getTagsArray());
+    }
+    return tags;
   }
 }

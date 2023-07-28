@@ -2,16 +2,10 @@
   <mat-drawer-container>
     <mat-drawer mode="side" opened class="bg-white shadow rounded mr-1 p-2">
       <div class="d-flex flex-column">
-        <button
-          (click)="switchViewTo('dashboard')"
-          class="my-1 btn btn-custom-blue fw-bold fs-5 px-5 py-2"
-        >
+        <button (click)="switchViewTo('dashboard')" class="my-1 btn btn-custom-blue fw-bold fs-5 px-5 py-2">
           <i class="bi bi-speedometer"></i> Dashboard
         </button>
-        <button
-          (click)="switchViewTo('complaints')"
-          class="my-1 btn btn-custom-blue fw-bold fs-5 px-5 py-2"
-        >
+        <button (click)="switchViewTo('complaints')" class="my-1 btn btn-custom-blue fw-bold fs-5 px-5 py-2">
           <i class="bi bi-flag"></i> Complaints
         </button>
       </div>
@@ -26,33 +20,21 @@
         </div>
         <div class="d-flex flex-column" *ngIf="view == 'dashboard'">
           <div class="d-flex flex-row justify-content-around">
-            <div
-              class="d-flex flex-column bg-white w-75 card card-body m-2 big-card"
-            >
-              <iframe
-                title="Dashboard"
-                width="1140"
-                height="541.25"
-                src="https://app.powerbi.com/reportEmbed?reportId=48e6667e-606a-4c32-9fcb-108059fffea4&autoAuth=true&ctid=76a2ae5a-9f00-4f6b-95ed-5d33d77c4d61"
-                frameborder="0"
-                allowFullScreen="true"
-              ></iframe>
+            <div class="d-flex flex-column bg-white w-75 card card-body m-2 big-card">
+              <iframe title="Dashboard (3)" width="1140" height="541.25"
+                src="https://app.powerbi.com/reportEmbed?reportId=2cfa3980-6acd-4995-a3af-78a6857bfbb1&autoAuth=true&ctid=1ecd776d-d57f-4de0-a67a-eca9809e8d8d"
+                frameborder="0" allowFullScreen="true">
+              </iframe>
             </div>
           </div>
         </div>
         <div class="d-flex flex-column" *ngIf="view == 'complaints'">
           <div class="d-flex flex-row justify-content-around" id="CL">
-            <div
-              class="d-flex flex-column bg-white w-75 card card-body m-2 big-card"
-            >
+            <div class="d-flex flex-column bg-white w-75 card card-body m-2 big-card">
               <h2 class="fw-bold fs-2 card-title">Complaints</h2>
               <div class="card-body">
-                <div
-                  *ngIf="complaints.length == 0 || complaints.length == null"
-                >
-                  <div
-                    class="d-flex flex-column justify-content-center align-items-center"
-                  >
+                <div *ngIf="complaints.length == 0 || complaints.length == null">
+                  <div class="d-flex flex-column justify-content-center align-items-center">
                     <img src="../../../assets/Empty.png" alt="empty" />
                     <h3 class="text-secondary">No Complaints found</h3>
                   </div>
@@ -60,30 +42,22 @@
                 <table class="table" *ngIf="complaints.length != 0">
                   <thead>
                     <tr>
-                      <th scope="col">User ID #</th>
                       <th scope="col">Objet</th>
                       <th scope="col">Date</th>
                       <th scope="col">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
-                  
-                   
+
+
                     <tr *ngFor="let complaint of complaints">
-                      <th scope="row">{{ complaint.user_id }}</th>
                       <td class="fw-bold">{{ complaint.object }}</td>
                       <td>{{ complaint.date.toUTCString() }}</td>
                       <td>
-                        <a
-                          [routerLink]="['/complaint', complaint.id]"
-                          class="mx-1 btn btn-primary"
-                        >
+                        <a [routerLink]="['/complaint', complaint.id]" class="mx-1 btn btn-primary">
                           View
                         </a>
-                        <button
-                          (click)="deleteComplaint(complaint.id)"
-                          class="mx-1 btn btn-danger"
-                        >
+                        <button (click)="deleteComplaint(complaint.id)" class="mx-1 btn btn-danger">
                           <i class="bi bi-trash"></i>
                         </button>
                       </td>
