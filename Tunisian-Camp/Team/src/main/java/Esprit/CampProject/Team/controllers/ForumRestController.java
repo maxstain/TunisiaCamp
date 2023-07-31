@@ -15,8 +15,7 @@ public class ForumRestController {
     // http://localhost:8089/forum/retrieve-all-forums
     @GetMapping("/retrieve-all-forums")
     public List<Forum> getForums() {
-        List<Forum> listForums = forumService.retrieveAllForums();
-        return listForums;
+        return forumService.retrieveAllForums();
     }
     // http://localhost:8089/forum/retrieve-forum/{forumId}"
 
@@ -28,8 +27,7 @@ public class ForumRestController {
     // http://localhost:8089/forum/add-forum"
     @PostMapping("/add-forum")
     public Forum addforum(@RequestBody Forum e) {
-        Forum forum = forumService.addForum(e);
-        return forum;
+        return forumService.addForum(e);
     }
     // http://localhost:8089/forum/update-forum/{forumId}
 

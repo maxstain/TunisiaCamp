@@ -17,8 +17,7 @@ public class FeedbackRestController {
     // http://localhost:8089/Feedback/retrieve-all-feedbacks
     @GetMapping("/retrieve-all-feedbacks")
     public List<Feedback> getFeedbacks() {
-        List<Feedback> listFeedbacks = feedbackService.retrieveAllFeedback();
-        return listFeedbacks;
+        return feedbackService.retrieveAllFeedback();
     }
     // http://localhost:8089/Feedback/retrieve-Feedback/{feedbackId}
 
@@ -30,8 +29,7 @@ public class FeedbackRestController {
 
     @PostMapping("/add-Feedback")
     public Feedback addFeedbackAPIV1(@RequestBody Feedback e) {
-        Feedback feedback = feedbackService.addFeedback(e);
-        return feedback;
+        return feedbackService.addFeedback(e);
     }
     // http://localhost:8089/Feedback/add-Feedback/{ForumId}
 

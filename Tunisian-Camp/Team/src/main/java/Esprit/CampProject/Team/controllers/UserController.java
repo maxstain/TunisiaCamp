@@ -29,8 +29,7 @@ public class UserController {
 
     @GetMapping("/retrieve-all-users")
     public List<User> getUsers() {
-            List<User> listUsers = userService.retrieveAllUsers();
-            return listUsers;
+        return userService.retrieveAllUsers();
     }
     @GetMapping("/retrieve-User/{id}")
     public User retrieveUser(@PathVariable("id") Long id) {

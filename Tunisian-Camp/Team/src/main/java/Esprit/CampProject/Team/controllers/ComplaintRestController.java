@@ -14,8 +14,7 @@ public class ComplaintRestController {
     // http://localhost:8089/Complaint/retrieve-all-Complaints
     @GetMapping("/retrieve-all-Complaints")
     public List<Complaint> getComplaints() {
-        List<Complaint> listComplaints = complaintService.retrieveAllComplaints();
-        return listComplaints;
+        return complaintService.retrieveAllComplaints();
     }
     // http://localhost:8089/Complaint/retrieve-Complaint/{complaintId}
 
@@ -27,8 +26,7 @@ public class ComplaintRestController {
 
     @PostMapping("/add-Complaint")
     public Complaint addComplaint(@RequestBody Complaint e) {
-        Complaint complaint = complaintService.addComplaint(e);
-        return complaint;
+        return complaintService.addComplaint(e);
     }
     // http://localhost:8089/update-Complaint/{complaintId}
 
