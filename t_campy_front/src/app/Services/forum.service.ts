@@ -494,7 +494,9 @@ export class ForumService {
 
   public async filterForumsByTag(tag: string): Promise<Forum[]> {
     return this.fetchForumsFromServer().then((forums) => {
-      return forums.filter((forum) => forum.getTagsArray().includes(tag));
+      return (this.forums = forums.filter((forum) =>
+        forum.getTagsArray().includes(tag)
+      ));
     });
   }
 
