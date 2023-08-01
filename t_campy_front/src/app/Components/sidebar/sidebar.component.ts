@@ -64,9 +64,9 @@ export class SidebarComponent {
   public filterForumsByTag(tag: string) {
     console.log('Tag:', tag);
     if (tag != 'All') {
-      this.forumService.filterForumsByTag(tag).then((forums) => {
-        this.questionsList.forums = forums;
-      });
+      this.forumService.forums = this.forumService.forums.filter((forum) =>
+        forum.getTags().includes(tag)
+      );
     } else {
       this.forumService.fetchForumsFromServer();
     }
